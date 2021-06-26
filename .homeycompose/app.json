@@ -1,0 +1,25 @@
+{
+  "id": "com.connector.tts",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "name": {
+    "en": "TTS-Connector"
+  },
+  "description": {
+    "en": "Connect Homey to The Things Stack "
+  },
+  "category": [
+    "internet"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "O O'H",
+    "email": "oo.hehir@gmail.com"
+  }
+}
