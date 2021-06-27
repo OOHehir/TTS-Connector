@@ -1,3 +1,122 @@
 {
-  "_comment": "This file is generated. Please edit .homeycompose/app.json instead."
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "com.connector.tts",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "name": {
+    "en": "TTS-Connector"
+  },
+  "description": {
+    "en": "Connect Homey to The Things Stack "
+  },
+  "category": [
+    "internet"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "O O'H",
+    "email": "oo.hehir@gmail.com"
+  },
+  "flow": {
+    "triggers": [
+      {
+        "title": {
+          "en": "Uplink message from TTS"
+        },
+        "hint": {
+          "en": "Message from specific end device"
+        },
+        "titleFormatted": {
+          "en": "Uplink from end device [[end_device_id]]"
+        },
+        "args": [
+          {
+            "name": "end_device_id",
+            "title": "end_device_id",
+            "type": "text",
+            "placeholder": {
+              "en": "From TTN Console"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "type": "string",
+            "name": "data1",
+            "title": {
+              "en": "data1"
+            }
+          },
+          {
+            "type": "string",
+            "name": "data2",
+            "title": {
+              "en": "data2"
+            }
+          },
+          {
+            "type": "string",
+            "name": "data3",
+            "title": {
+              "en": "data3"
+            }
+          }
+        ],
+        "id": "msg-from-end-device"
+      }
+    ],
+    "conditions": [
+      {
+        "title": {
+          "en": "data1 equals"
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "data1",
+            "placeholder": {
+              "en": "On"
+            }
+          }
+        ],
+        "id": "data1"
+      },
+      {
+        "title": {
+          "en": "data2 equals"
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "data2",
+            "placeholder": {
+              "en": "On"
+            }
+          }
+        ],
+        "id": "data2"
+      },
+      {
+        "title": {
+          "en": "data3 equals"
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "data3",
+            "placeholder": {
+              "en": "On"
+            }
+          }
+        ],
+        "id": "data3"
+      }
+    ]
+  }
 }

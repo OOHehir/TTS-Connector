@@ -1,0 +1,14 @@
+{
+  "title": {
+    "en": "data2 equals"
+  },
+  "args": [
+    {
+      "type": "text",
+      "name": "data2",
+      "placeholder": {
+        "en": "On"
+      }
+    }
+  ]
+}

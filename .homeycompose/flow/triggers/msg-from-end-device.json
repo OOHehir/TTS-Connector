@@ -1,0 +1,42 @@
+{
+  "title": {
+    "en": "Uplink message from TTS"
+  },
+  "hint": {
+    "en": "Message from specific end device"
+  },
+  "titleFormatted": { "en": "Uplink from end device [[end_device_id]]"},
+  "args": [
+    {
+      "name": "end_device_id",
+      "title": "end_device_id",
+      "type": "text",
+      "placeholder": {
+        "en": "From TTN Console"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "type": "string",
+      "name": "data1",
+      "title": {
+        "en": "data1"
+      }
+    },
+    {
+      "type": "string",
+      "name": "data2",
+      "title": {
+        "en": "data2"
+      }
+    },
+    {
+      "type": "string",
+      "name": "data3",
+      "title": {
+        "en": "data3"
+      }
+    }
+  ]
+}
