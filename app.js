@@ -5,12 +5,10 @@ const Homey = require('homey');
 class App extends Homey.App {
   async onInit() {
 
-    const myToken = await this.homey.flow.createToken("tts_data1", {
-      type: "text",
-      title: "data1",
-    });
-  
-    await myToken.setValue("");
+    // const myToken = await this.homey.flow.createToken("tts_data1", {
+    //   type: "text",
+    //   title: "data1",
+    // });
 
     const cardTriggerEndDevice = this.homey.flow.getTriggerCard('msg-from-end-device');
     cardTriggerEndDevice.registerRunListener(async (args, state) => {
@@ -23,13 +21,13 @@ class App extends Homey.App {
       return args.end_device_id === state.end_device_id ;
     });
 
-    // const cardConditionData1 = this.homey.flow.getConditionCard('data1');
-    // cardConditionData1.registerRunListener(async (args, state) => {
-    //   this.log ('cardConditionData1 args = ' + args);  // this is the user input
-    // 	this.log ('cardConditionData1 state = ' + state);  // passed by trigger
-    //   const match = await 
-    //   return args.data1 === state.data1;
-    // });
+    const cardConditionData1 = this.homey.flow.getConditionCard('data1');
+    cardConditionData1.registerRunListener(async (args, state) => {
+      //this.log ('cardConditionData1 args = ' + args);  // this is the user input
+    	//this.log ('cardConditionData1 state = ' + state);  // passed by trigger
+      const user_value = args.value1;
+      return user_value === state.data1;
+    });
 
     // const cardConditionData2 = this.homey.flow.getConditionCard('data2');
     // cardConditionData2.registerRunListener(async (args, state) => {
@@ -88,17 +86,15 @@ class App extends Homey.App {
         this.log('Frame port: ' + f_port + ', frame count: ' + f_cnt + ', frame payload (Base64): ' + frm_payload +
         ', decoded payload object (decoded by the device payload formatter) data0: ' + decoded_payload_data0 +
         ', data1: ' + decoded_payload_data1 + ', data2: ' + decoded_payload_data2);
-      
-      }
 
       cardTriggerEndDevice.trigger({
         data1: decoded_payload_data0 || '',
         data2: decoded_payload_data1 || '',
         data3: decoded_payload_data2 || ''
-      }, {'end_device_id': end_device_id})
+      },{'end_device_id': end_device_id})
       .then( console.log( 'event triggered for end_device_id ' + end_device_id) )
-      .catch( this.error )
-
+      .catch( this.error );
+    }
     });
   }
 }

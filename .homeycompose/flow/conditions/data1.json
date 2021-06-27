@@ -1,11 +1,14 @@
 {
   "title": {
-    "en": "data1 equals"
+    "en": "data1 !{{equals| does not equal}}"
+  },
+  "titleFormatted": {
+    "en": "data1 !{{equals| does not equal}} [[value1]]"
   },
   "args": [
     {
+      "name": "value1",
       "type": "text",
-      "name": "data1",
       "placeholder": {
         "en": "On"
       }

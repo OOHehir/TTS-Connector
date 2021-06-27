@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
+  "brandColor": "#FF0000",
   "name": {
     "en": "TTS-Connector"
   },
@@ -21,5 +22,17 @@
   "author": {
     "name": "O O'H",
     "email": "oo.hehir@gmail.com"
-  }
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "oo.hehir@gmail.com"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/OOHehir/connector.tts/issues"
+  },
+  "homeyCommunityTopicId": 48869,
+  "source": "https://github.com/OOHehir/connector.tts"
 }
