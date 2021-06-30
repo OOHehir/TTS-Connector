@@ -1,21 +1,10 @@
 {
   "title": {
-    "en": "Uplink message from TTN"
+    "en": "msg-from-any-device"
   },
   "hint": {
-    "en": "Message from specific end device"
+    "en": "Msg from any TTN device"
   },
-  "titleFormatted": { "en": "Uplink from end device [[end_device_id]]"},
-  "args": [
-    {
-      "name": "end_device_id",
-      "title": "end_device_id",
-      "type": "text",
-      "placeholder": {
-        "en": "From TTN Console"
-      }
-    }
-  ],
   "tokens": [
     {
       "type": "string",

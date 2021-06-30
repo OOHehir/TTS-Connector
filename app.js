@@ -10,8 +10,9 @@ class App extends Homey.App {
     //   title: "data1",
     // });
 
-    const cardTriggerEndDevice = this.homey.flow.getTriggerCard('msg-from-end-device');
-    cardTriggerEndDevice.registerRunListener(async (args, state) => {
+    const cardTriggerSpecificDevice = this.homey.flow.getTriggerCard('msg-from-end-device');
+
+    cardTriggerSpecificDevice.registerRunListener(async (args, state) => {
       // args is the user input,
       // for example { 'location': 'New York' }
       // state is the parameter passed in trigger()
@@ -21,13 +22,8 @@ class App extends Homey.App {
       return args.end_device_id === state.end_device_id ;
     });
 
-    const cardConditionData1 = this.homey.flow.getConditionCard('data1');
-    cardConditionData1.registerRunListener(async (args, state) => {
-      //this.log ('cardConditionData1 args = ' + args);  // this is the user input
-    	//this.log ('cardConditionData1 state = ' + state);  // passed by trigger
-      const user_value = args.value1;
-      return user_value === state.data1;
-    });
+    // No arguments, no runListener required
+    const cardTriggerAnyDevice = this.homey.flow.getTriggerCard('msg-from-any-device');
 
     // const cardConditionData2 = this.homey.flow.getConditionCard('data2');
     // cardConditionData2.registerRunListener(async (args, state) => {
@@ -77,22 +73,32 @@ class App extends Homey.App {
         var f_port = args.body.uplink_message.f_port;
         var f_cnt = args.body.uplink_message.f_cnt;
         var frm_payload = args.body.uplink_message.frm_payload;	// 'AAECAw==',
-        var decoded_payload_data0 = args.body.uplink_message.decoded_payload.data0;	// decoded_payload: { data1: '0' },
-        var decoded_payload_data1 = args.body.uplink_message.decoded_payload.data1;	// decoded_payload: { data1: '0' },
-        var decoded_payload_data2 = args.body.uplink_message.decoded_payload.data2;	// decoded_payload: { data1: '0' },
+        var decoded_payload_state1 = args.body.uplink_message.decoded_payload.state1;	// decoded_payload: { state1: '0' },
+        var decoded_payload_state2 = args.body.uplink_message.decoded_payload.state2;	// decoded_payload: { state2: '0' },
+        var decoded_payload_value1 = args.body.uplink_message.decoded_payload.value1;	// decoded_payload: { value1: '0' },
+        var decoded_payload_value2 = args.body.uplink_message.decoded_payload.value2;	// decoded_payload: { value2: '0' },
         //var payload_warnings = args.body.uplink_message.decoded_payload_warnings;	// decoded_payload_warnings: [],
       
         this.log('Msg from device_id: ' + end_device_id + ' with application_id: ' + application_id);
         this.log('Frame port: ' + f_port + ', frame count: ' + f_cnt + ', frame payload (Base64): ' + frm_payload +
-        ', decoded payload object (decoded by the device payload formatter) data0: ' + decoded_payload_data0 +
-        ', data1: ' + decoded_payload_data1 + ', data2: ' + decoded_payload_data2);
+        ', decoded payload object (decoded by the device payload formatter) state1: ' + decoded_payload_state1 +
+        ', state2: ' + decoded_payload_state2 + ', value1: ' + decoded_payload_value1, + ', value2: ' + decoded_payload_value2);
 
-      cardTriggerEndDevice.trigger({
-        data1: decoded_payload_data0 || '',
-        data2: decoded_payload_data1 || '',
-        data3: decoded_payload_data2 || ''
+      cardTriggerSpecificDevice.trigger({
+        state1: decoded_payload_state1 || '',
+        state2: decoded_payload_state2 || '',
+        value1: decoded_payload_value1 || '',
+        value2: decoded_payload_value2 || ''
       },{'end_device_id': end_device_id})
-      .then( console.log( 'event triggered for end_device_id ' + end_device_id) )
+      .then( console.log( 'event triggered for cardTriggerSpecificDevice ' + end_device_id) )
+      .catch( this.error );
+      cardTriggerAnyDevice.trigger({
+        state1: decoded_payload_state1 || '',
+        state2: decoded_payload_state2 || '',
+        value1: decoded_payload_value1 || '',
+        value2: decoded_payload_value2 || ''
+      },{})
+      .then( console.log( 'event triggered for cardTriggerAnyDevice ' + end_device_id) )
       .catch( this.error );
     }
     });

@@ -40,7 +40,46 @@
     "triggers": [
       {
         "title": {
-          "en": "Uplink message from TTS"
+          "en": "msg-from-any-device"
+        },
+        "hint": {
+          "en": "Msg from any TTN device"
+        },
+        "tokens": [
+          {
+            "type": "string",
+            "name": "state1",
+            "title": {
+              "en": "state1"
+            }
+          },
+          {
+            "type": "string",
+            "name": "state2",
+            "title": {
+              "en": "state2"
+            }
+          },
+          {
+            "type": "number",
+            "name": "value1",
+            "title": {
+              "en": "value1"
+            }
+          },
+          {
+            "type": "number",
+            "name": "value2",
+            "title": {
+              "en": "value2"
+            }
+          }
+        ],
+        "id": "msg-from-any-device"
+      },
+      {
+        "title": {
+          "en": "Uplink message from TTN"
         },
         "hint": {
           "en": "Message from specific end device"
@@ -61,77 +100,34 @@
         "tokens": [
           {
             "type": "string",
-            "name": "data1",
+            "name": "state1",
             "title": {
-              "en": "data1"
+              "en": "state1"
             }
           },
           {
             "type": "string",
-            "name": "data2",
+            "name": "state2",
             "title": {
-              "en": "data2"
+              "en": "state2"
             }
           },
           {
-            "type": "string",
-            "name": "data3",
+            "type": "number",
+            "name": "value1",
             "title": {
-              "en": "data3"
+              "en": "value1"
+            }
+          },
+          {
+            "type": "number",
+            "name": "value2",
+            "title": {
+              "en": "value2"
             }
           }
         ],
         "id": "msg-from-end-device"
-      }
-    ],
-    "conditions": [
-      {
-        "title": {
-          "en": "data1 !{{equals| does not equal}}"
-        },
-        "titleFormatted": {
-          "en": "data1 !{{equals| does not equal}} [[value1]]"
-        },
-        "args": [
-          {
-            "name": "value1",
-            "type": "text",
-            "placeholder": {
-              "en": "On"
-            }
-          }
-        ],
-        "id": "data1"
-      },
-      {
-        "title": {
-          "en": "data2 equals"
-        },
-        "args": [
-          {
-            "type": "text",
-            "name": "data2",
-            "placeholder": {
-              "en": "On"
-            }
-          }
-        ],
-        "id": "data2"
-      },
-      {
-        "title": {
-          "en": "data3 equals"
-        },
-        "args": [
-          {
-            "type": "text",
-            "name": "data3",
-            "placeholder": {
-              "en": "On"
-            }
-          }
-        ],
-        "id": "data3"
       }
     ]
   }
