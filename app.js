@@ -11,7 +11,6 @@ class App extends Homey.App {
     // });
 
     const cardTriggerSpecificDevice = this.homey.flow.getTriggerCard('msg-from-end-device');
-
     cardTriggerSpecificDevice.registerRunListener(async (args, state) => {
       // args is the user input,
       // for example { 'location': 'New York' }
@@ -25,16 +24,10 @@ class App extends Homey.App {
     // No arguments, no runListener required
     const cardTriggerAnyDevice = this.homey.flow.getTriggerCard('msg-from-any-device');
 
-    // const cardConditionData2 = this.homey.flow.getConditionCard('data2');
-    // cardConditionData2.registerRunListener(async (args, state) => {
-    //   return args.data2 === state.data2;
-    // });
-
-    // const cardConditionData3 = this.homey.flow.getConditionCard('data3');
-    // cardConditionData3.registerRunListener(async (args, state) => {
-    //   return args.data3 === state.data3;
-    // });
-
+    const cardTriggerSpecificApplication = this.homey.flow.getTriggerCard('msg-from-application');
+    cardTriggerSpecificApplication.registerRunListener(async (args, state) => {
+      return args.application_id === state.application_id;
+    });
 
     const id = Homey.env.WEBHOOK_ID;
     const secret = Homey.env.WEBHOOK_SECRET;
@@ -90,7 +83,7 @@ class App extends Homey.App {
         value1: decoded_payload_value1 || '',
         value2: decoded_payload_value2 || ''
       },{'end_device_id': end_device_id})
-      .then( console.log( 'event triggered for cardTriggerSpecificDevice ' + end_device_id) )
+      .then( console.log( 'event triggered for cardTriggerSpecificDevice: ' + end_device_id) )
       .catch( this.error );
       cardTriggerAnyDevice.trigger({
         state1: decoded_payload_state1 || '',
@@ -98,7 +91,15 @@ class App extends Homey.App {
         value1: decoded_payload_value1 || '',
         value2: decoded_payload_value2 || ''
       },{})
-      .then( console.log( 'event triggered for cardTriggerAnyDevice ' + end_device_id) )
+      .then( console.log( 'event triggered for cardTriggerAnyDevice: ' + end_device_id) )
+      .catch( this.error );
+      cardTriggerSpecificApplication.trigger({
+        state1: decoded_payload_state1 || '',
+        state2: decoded_payload_state2 || '',
+        value1: decoded_payload_value1 || '',
+        value2: decoded_payload_value2 || ''
+      },{'application_id': application_id})
+      .then( console.log( 'event triggered for cardTriggerSpecificApplication: ' + application_id) )
       .catch( this.error );
     }
     });

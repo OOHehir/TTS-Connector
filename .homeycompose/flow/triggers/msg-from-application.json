@@ -1,15 +1,14 @@
 {
   "title": {
-    "en": "Uplink message from TTNS end device"
+    "en": "Uplink message from TTNS application"
   },
   "hint": {
-    "en": "Message from specific end device"
+    "en": "Message from a specific application"
   },
-  "titleFormatted": { "en": "Uplink from end device [[end_device_id]]"},
   "args": [
     {
-      "name": "end_device_id",
       "type": "text",
+      "name": "application_id",
       "placeholder": {
         "en": "From TTN Console"
       }

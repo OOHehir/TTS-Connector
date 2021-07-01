@@ -79,7 +79,55 @@
       },
       {
         "title": {
-          "en": "Uplink message from TTN"
+          "en": "Uplink message from TTNS application"
+        },
+        "hint": {
+          "en": "Message from a specific application"
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "application_id",
+            "placeholder": {
+              "en": "From TTN Console"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "type": "string",
+            "name": "state1",
+            "title": {
+              "en": "state1"
+            }
+          },
+          {
+            "type": "string",
+            "name": "state2",
+            "title": {
+              "en": "state2"
+            }
+          },
+          {
+            "type": "number",
+            "name": "value1",
+            "title": {
+              "en": "value1"
+            }
+          },
+          {
+            "type": "number",
+            "name": "value2",
+            "title": {
+              "en": "value2"
+            }
+          }
+        ],
+        "id": "msg-from-application"
+      },
+      {
+        "title": {
+          "en": "Uplink message from TTNS end device"
         },
         "hint": {
           "en": "Message from specific end device"
@@ -90,7 +138,6 @@
         "args": [
           {
             "name": "end_device_id",
-            "title": "end_device_id",
             "type": "text",
             "placeholder": {
               "en": "From TTN Console"
