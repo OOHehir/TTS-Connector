@@ -2,13 +2,13 @@
 
 Based on code from https://github.com/jordenc/webhook.manager
 
-Make it easier to POST information to Homey from The Things Stack (TTS), using webhooks.
+Make it easier to POST information to Homey from The Things Network Stack (TTNS), using webhooks.
 
 ### Note
 
-This app does NOT implement loRa on Homey, rather it uses the internet to connect to TTS servers & pass data back & forth. From TTS servers the data is relayed via LoRaWAN gateways to end devices. For more info start here: https://www.thethingsindustries.com/docs/getting-started/quick-start/
+This app does NOT implement loRa on Homey, rather it uses the internet to connect to TTS servers & pass data back & forth. From TTNS servers the data is relayed via LoRaWAN gateways to end devices. For more info start here: https://www.thethingsindustries.com/docs/getting-started/quick-start/
 
-The app assumes that your end device is connected correctly to the TTS stack v3.
+The app assumes that your end device is connected correctly to the TTNS stack v3.
 
 ### Setup
 
