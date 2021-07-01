@@ -15,6 +15,20 @@
     }
   ],
   "tokens": [
+   {
+    "type": "string",
+    "name": "end_device_id",
+    "title": {
+      "en": "end_device_id"
+    }
+  },
+  {
+    "type": "string",
+    "name": "application_id",
+    "title": {
+      "en": "application_id"
+    }
+  },
     {
       "type": "string",
       "name": "state1",

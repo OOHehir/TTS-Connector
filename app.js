@@ -29,7 +29,7 @@ class App extends Homey.App {
       return args.application_id === state.application_id;
     });
 
-    const id = Homey.env.WEBHOOK_ID;
+    const cloudhookID = Homey.env.WEBHOOK_ID;
     const secret = Homey.env.WEBHOOK_SECRET;
     var key_path_value 	=	this.homey.settings.get('key_path_value');
 
@@ -49,7 +49,7 @@ class App extends Homey.App {
 			this.homey.settings.set('key_path_value', key_path_value);
 		}
 
-    const myWebhook = await this.homey.cloud.createWebhook(id, secret, {$key: key_path_value} );
+    const myWebhook = await this.homey.cloud.createWebhook(cloudhookID, secret, {$key: key_path_value} );
 
     // Test webhook using
     // curl -d '{"event":"Hello_World"}' -H "x-user-id: <user-id-above>" -H "Content-Type: application/json" https://webhooks.athom.com/webhook/<WEBHOOK_ID>
@@ -78,6 +78,8 @@ class App extends Homey.App {
         ', state2: ' + decoded_payload_state2 + ', value1: ' + decoded_payload_value1, + ', value2: ' + decoded_payload_value2);
 
       cardTriggerSpecificDevice.trigger({
+        end_device_id: end_device_id || '',
+        application_id: application_id || '',
         state1: decoded_payload_state1 || '',
         state2: decoded_payload_state2 || '',
         value1: decoded_payload_value1 || '',
@@ -86,6 +88,8 @@ class App extends Homey.App {
       .then( console.log( 'event triggered for cardTriggerSpecificDevice: ' + end_device_id) )
       .catch( this.error );
       cardTriggerAnyDevice.trigger({
+        end_device_id: end_device_id || '',
+        application_id: application_id || '',
         state1: decoded_payload_state1 || '',
         state2: decoded_payload_state2 || '',
         value1: decoded_payload_value1 || '',
@@ -94,6 +98,8 @@ class App extends Homey.App {
       .then( console.log( 'event triggered for cardTriggerAnyDevice: ' + end_device_id) )
       .catch( this.error );
       cardTriggerSpecificApplication.trigger({
+        end_device_id: end_device_id || '',
+        application_id: application_id || '',
         state1: decoded_payload_state1 || '',
         state2: decoded_payload_state2 || '',
         value1: decoded_payload_value1 || '',

@@ -1,0 +1,52 @@
+<head>
+    <!-- ... -->
+    <script
+      type="text/javascript"
+      src="/homey.js"
+      data-origin="settings"
+    ></script>
+  </head>
+
+  <body>
+    <h1 data-i18n="settings.title"></h1>
+    <p data-i18n="settings.subtitle"></p>
+
+    <fieldset>
+      <legend>TTSN Connector Settings</legend>
+
+      <div class="field row">
+        <label for="webhookID">Weebhook ID</label>
+        <button id="copy">Copy</button>
+      </div>
+      <div class="field row">
+        <label for="keypathValue">Key Path (x-user-id)</label>
+        <button id="copy">Copy</button>
+      </div>
+    </fieldset>
+
+    <script type="text/javascript">
+    
+        // Initialize Homey
+        function onHomeyReady(Homey) {
+            
+            Homey.ready();
+            
+            // Display values for user to input on TTNS Console
+            Homey.get("key_path_value", function (err, key_path_value) {
+                if (err) return Homey.alert(err);
+                if (key_path_value) {
+                    document.getElementById('keypathValue').innerHTML = key_path_value;
+                }
+            });
+
+            Homey.get("cloudhookID", function (err, cloudhookID) {
+                if (err) return Homey.alert(err);
+                if (cloudhookID) {
+                    document.getElementById('webhookID').innerHTML = cloudhookID;
+                }
+            });
+        }
+    </script>
+    
+    </body>
+    </html>

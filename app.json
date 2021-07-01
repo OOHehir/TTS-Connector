@@ -4,12 +4,12 @@
   "version": "1.0.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
-  "brandColor": "#FF0000",
+  "brandColor": "#0D83D0",
   "name": {
-    "en": "TTS-Connector"
+    "en": "The Things Network Stack"
   },
   "description": {
-    "en": "Connect Homey to The Things Stack "
+    "en": "Make Homey part of a global LoRaWAN Network"
   },
   "category": [
     "internet"
@@ -21,7 +21,7 @@
     "xlarge": "/assets/images/xlarge.png"
   },
   "author": {
-    "name": "O O'H",
+    "name": "Owen O'Hehir",
     "email": "oo.hehir@gmail.com"
   },
   "contributing": {
@@ -46,6 +46,20 @@
           "en": "Msg from any TTN device"
         },
         "tokens": [
+          {
+            "type": "string",
+            "name": "end_device_id",
+            "title": {
+              "en": "end_device_id"
+            }
+          },
+          {
+            "type": "string",
+            "name": "application_id",
+            "title": {
+              "en": "application_id"
+            }
+          },
           {
             "type": "string",
             "name": "state1",
@@ -94,6 +108,20 @@
           }
         ],
         "tokens": [
+          {
+            "type": "string",
+            "name": "end_device_id",
+            "title": {
+              "en": "end_device_id"
+            }
+          },
+          {
+            "type": "string",
+            "name": "application_id",
+            "title": {
+              "en": "application_id"
+            }
+          },
           {
             "type": "string",
             "name": "state1",
@@ -145,6 +173,20 @@
           }
         ],
         "tokens": [
+          {
+            "type": "string",
+            "name": "end_device_id",
+            "title": {
+              "en": "end_device_id"
+            }
+          },
+          {
+            "type": "string",
+            "name": "application_id",
+            "title": {
+              "en": "application_id"
+            }
+          },
           {
             "type": "string",
             "name": "state1",
