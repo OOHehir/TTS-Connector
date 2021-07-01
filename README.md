@@ -12,24 +12,22 @@ The app assumes that your end device is connected correctly to the TTNS stack v3
 
 ### Setup (using webhook template) - preferred method
 1. After installing the app on Homey, go to the app 'Settings' page. It shows the 'Webhook ID' & 'Keypath Value'.
-2. Retrieved your homeys 'cloudid' from here: https://tools.developer.homey.app/tools/system
-3. On your TTNS console (for Europe: https://eu1.cloud.thethings.network/console/) select: 'Go to Applications'> Relevant Application> Integrations > Webhooks > '+ Add Webhook'> Homey Template. Fill in the details from step 1.
-4. Save!
-5. Any messages received by the application should then be sent to your Homey.
+2. On your TTNS console (for Europe: https://eu1.cloud.thethings.network/console/) select: 'Go to Applications'> Relevant Application> Integrations > Webhooks > '+ Add Webhook'> Homey Template. Fill in the details from step 1.
+3. Save!
+4. Any messages received by the application should then be sent to your Homey via the webhook.
 
 
 ### Setup (using custom webhook) 
 1. After installing the app on Homey, go to the app 'Settings' page. It shows the 'Webhook ID' & 'Keypath Value'.
-2. Retrieved your homeys 'cloudid' from here: https://tools.developer.homey.app/tools/system
-3. On your TTNS console (for Europe: https://eu1.cloud.thethings.network/console/) select: 'Go to Applications'> Relevant Application> Integrations > Webhooks > '+ Add Webhook'> Custom Template. Fill in the details as follows:
+2. On your TTNS console (for Europe: https://eu1.cloud.thethings.network/console/) select: 'Go to Applications'> Relevant Application> Integrations > Webhooks > '+ Add Webhook'> Custom Template. Fill in the details as follows:
     webhook ID - whatever you like
     webhook format - JSON
     BaseURL: https://webhooks.athom.com/webhook/your_Webhook_ID_from_step_1
-4. Add an additional header using authorization:
+3. Add an additional header using authorization:
     x-user-id in 
     Value from step 1.
 4. Save!
-5. Any messages received by the application should then be sent to your Homey.
+4. Any messages received by the application should then be sent to your Homey via the webhook.
 
 ### Flowcard
 
