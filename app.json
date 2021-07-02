@@ -43,7 +43,7 @@
           "en": "msg-from-any-device"
         },
         "hint": {
-          "en": "Msg from any TTN device"
+          "en": "Message from any TTN device"
         },
         "tokens": [
           {
@@ -93,7 +93,7 @@
       },
       {
         "title": {
-          "en": "Uplink message from TTNS application"
+          "en": "Uplink message from TTN application"
         },
         "hint": {
           "en": "Message from a specific application"
@@ -158,7 +158,7 @@
       },
       {
         "title": {
-          "en": "Uplink message from TTNS end device"
+          "en": "Uplink message from TTN end device"
         },
         "hint": {
           "en": "Message from specific end device"
