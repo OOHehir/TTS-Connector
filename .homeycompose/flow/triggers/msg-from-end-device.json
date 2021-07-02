@@ -1,6 +1,6 @@
 {
   "title": {
-    "en": "Uplink message from TTNS end device"
+    "en": "Uplink message from TTN end device"
   },
   "hint": {
     "en": "Message from specific end device"

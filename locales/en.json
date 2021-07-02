@@ -1,1 +1,6 @@
-{}
+{
+    "settings": {
+        "title": "The Things Network Settings",
+        "subtitle": "On your TTN console select: <br>'Relevant Application> Integrations > Webhooks > '+ Add Webhook'> Homey Template. <br> Fill in the values below"
+    }
+}

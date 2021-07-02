@@ -2,23 +2,18 @@
 
 const Homey = require('homey');
 
+var key_path_value;
+const cloudhookID = Homey.env.WEBHOOK_ID;
+
 class App extends Homey.App {
   async onInit() {
-
-    // const myToken = await this.homey.flow.createToken("tts_data1", {
-    //   type: "text",
-    //   title: "data1",
-    // });
 
     const cardTriggerSpecificDevice = this.homey.flow.getTriggerCard('msg-from-end-device');
     cardTriggerSpecificDevice.registerRunListener(async (args, state) => {
       // args is the user input,
-      // for example { 'location': 'New York' }
       // state is the parameter passed in trigger()
-      // for example { 'location': 'Amsterdam' }
-
       // If true, this flow should run
-      return args.end_device_id === state.end_device_id ;
+      return args.end_device_id === state.end_device_id;
     });
 
     // No arguments, no runListener required
@@ -29,27 +24,27 @@ class App extends Homey.App {
       return args.application_id === state.application_id;
     });
 
-    const cloudhookID = Homey.env.WEBHOOK_ID;
+
     const secret = Homey.env.WEBHOOK_SECRET;
-    var key_path_value 	=	this.homey.settings.get('key_path_value');
+    key_path_value = this.homey.settings.get('key_path_value');
 
     if (key_path_value) {
 
-			this.log ('Stored key path value (x-user-id): ' + key_path_value);
+      this.log('Stored key path value (x-user-id): ' + key_path_value);
 
-		} else {
+    } else {
 
-			var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-			key_path_value = '';
-		    for( var i=0; i < 10; i++ )
-		        key_path_value += possible.charAt(Math.floor(Math.random() * possible.length));
+      key_path_value = '';
+      for (var i = 0; i < 10; i++)
+        key_path_value += possible.charAt(Math.floor(Math.random() * possible.length));
 
-			this.log('New key path value (x-user-id): ' + key_path_value);
-			this.homey.settings.set('key_path_value', key_path_value);
-		}
+      this.log('New key path value (x-user-id): ' + key_path_value);
+      this.homey.settings.set('key_path_value', key_path_value);
+    }
 
-    const myWebhook = await this.homey.cloud.createWebhook(cloudhookID, secret, {$key: key_path_value} );
+    const myWebhook = await this.homey.cloud.createWebhook(cloudhookID, secret, { $key: key_path_value });
 
     // Test webhook using
     // curl -d '{"event":"Hello_World"}' -H "x-user-id: <user-id-above>" -H "Content-Type: application/json" https://webhooks.athom.com/webhook/<WEBHOOK_ID>
@@ -71,43 +66,43 @@ class App extends Homey.App {
         var decoded_payload_value1 = args.body.uplink_message.decoded_payload.value1;	// decoded_payload: { value1: '0' },
         var decoded_payload_value2 = args.body.uplink_message.decoded_payload.value2;	// decoded_payload: { value2: '0' },
         //var payload_warnings = args.body.uplink_message.decoded_payload_warnings;	// decoded_payload_warnings: [],
-      
+
         this.log('Msg from device_id: ' + end_device_id + ' with application_id: ' + application_id);
         this.log('Frame port: ' + f_port + ', frame count: ' + f_cnt + ', frame payload (Base64): ' + frm_payload +
-        ', decoded payload object (decoded by the device payload formatter) state1: ' + decoded_payload_state1 +
-        ', state2: ' + decoded_payload_state2 + ', value1: ' + decoded_payload_value1, + ', value2: ' + decoded_payload_value2);
+          ', decoded payload object (decoded by the device payload formatter) state1: ' + decoded_payload_state1 +
+          ', state2: ' + decoded_payload_state2 + ', value1: ' + decoded_payload_value1, + ', value2: ' + decoded_payload_value2);
 
-      cardTriggerSpecificDevice.trigger({
-        end_device_id: end_device_id || '',
-        application_id: application_id || '',
-        state1: decoded_payload_state1 || '',
-        state2: decoded_payload_state2 || '',
-        value1: decoded_payload_value1 || '',
-        value2: decoded_payload_value2 || ''
-      },{'end_device_id': end_device_id})
-      .then( console.log( 'event triggered for cardTriggerSpecificDevice: ' + end_device_id) )
-      .catch( this.error );
-      cardTriggerAnyDevice.trigger({
-        end_device_id: end_device_id || '',
-        application_id: application_id || '',
-        state1: decoded_payload_state1 || '',
-        state2: decoded_payload_state2 || '',
-        value1: decoded_payload_value1 || '',
-        value2: decoded_payload_value2 || ''
-      },{})
-      .then( console.log( 'event triggered for cardTriggerAnyDevice: ' + end_device_id) )
-      .catch( this.error );
-      cardTriggerSpecificApplication.trigger({
-        end_device_id: end_device_id || '',
-        application_id: application_id || '',
-        state1: decoded_payload_state1 || '',
-        state2: decoded_payload_state2 || '',
-        value1: decoded_payload_value1 || '',
-        value2: decoded_payload_value2 || ''
-      },{'application_id': application_id})
-      .then( console.log( 'event triggered for cardTriggerSpecificApplication: ' + application_id) )
-      .catch( this.error );
-    }
+        cardTriggerSpecificDevice.trigger({
+          end_device_id: end_device_id || '',
+          application_id: application_id || '',
+          state1: decoded_payload_state1 || '',
+          state2: decoded_payload_state2 || '',
+          value1: decoded_payload_value1 || '',
+          value2: decoded_payload_value2 || ''
+        }, { 'end_device_id': end_device_id })
+          .then(console.log('event triggered for cardTriggerSpecificDevice: ' + end_device_id))
+          .catch(this.error);
+        cardTriggerAnyDevice.trigger({
+          end_device_id: end_device_id || '',
+          application_id: application_id || '',
+          state1: decoded_payload_state1 || '',
+          state2: decoded_payload_state2 || '',
+          value1: decoded_payload_value1 || '',
+          value2: decoded_payload_value2 || ''
+        }, {})
+          .then(console.log('event triggered for cardTriggerAnyDevice: ' + end_device_id))
+          .catch(this.error);
+        cardTriggerSpecificApplication.trigger({
+          end_device_id: end_device_id || '',
+          application_id: application_id || '',
+          state1: decoded_payload_state1 || '',
+          state2: decoded_payload_state2 || '',
+          value1: decoded_payload_value1 || '',
+          value2: decoded_payload_value2 || ''
+        }, { 'application_id': application_id })
+          .then(console.log('event triggered for cardTriggerSpecificApplication: ' + application_id))
+          .catch(this.error);
+      }
     });
   }
 }

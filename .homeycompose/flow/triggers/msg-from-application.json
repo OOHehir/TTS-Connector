@@ -1,10 +1,11 @@
 {
   "title": {
-    "en": "Uplink message from TTNS application"
+    "en": "Uplink message from TTN application"
   },
   "hint": {
     "en": "Message from a specific application"
   },
+  "titleFormatted": { "en": "Uplink from specific application [[application_id]]"},
   "args": [
     {
       "type": "text",

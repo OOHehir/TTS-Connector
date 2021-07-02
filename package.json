@@ -1,6 +1,6 @@
 {
-  "name": "com.connector.tts",
-  "version": "1.0.0",
+  "name": "com.connector.ttn",
+  "version": "0.0.1",
   "main": "app.js",
   "scripts": {
     "build": "tsc"

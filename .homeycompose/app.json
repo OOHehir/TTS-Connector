@@ -1,11 +1,11 @@
 {
-  "id": "com.connector.tts",
-  "version": "1.0.0",
+  "id": "com.connector.ttn",
+  "version": "0.0.1",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#0D83D0",
   "name": {
-    "en": "The Things Network Stack"
+    "en": "The Things Network"
   },
   "description": {
     "en": "Make Homey part of a global LoRaWAN Network"
@@ -31,8 +31,8 @@
     }
   },
   "bugs": {
-    "url": "https://github.com/OOHehir/connector.tts/issues"
+    "url": "https://github.com/OOHehir/connector.ttn/issues"
   },
   "homeyCommunityTopicId": 48869,
-  "source": "https://github.com/OOHehir/connector.tts"
+  "source": "https://github.com/OOHehir/connector.ttn"
 }
