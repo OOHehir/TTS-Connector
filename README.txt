@@ -23,10 +23,9 @@ The app assumes that your end device is connected correctly to the TTN stack v3.
 2. On your TTN console (for [Europe](https://eu1.cloud.thethings.network/console/applications/)) select: 'Relevant Application> Integrations > Webhooks > '+ Add Webhook'> Custom Template. Fill in the details as follows:  
     webhook ID - whatever you like  
     webhook format - JSON   
-    BaseURL: https://webhooks.athom.com/webhook/<Webhook ID>   
+    BaseURL: https://webhooks.athom.com/webhook/Webhook ID   
 3. Add an additional header using authorization:  
-    x-user-id  
-    <Keypath Value>     
+    x-user-id      Keypath Value    
 4. Save!
 
 ### Flowcards
