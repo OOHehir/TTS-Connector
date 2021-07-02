@@ -29,7 +29,7 @@ The app assumes that your end device is connected correctly to the TTN stack v3.
     <Keypath Value>     
 4. Save!
 
-### Flowcard
+### Flowcards
 Flows can be triggered by  
 1. Uplink message
 2. Uplink message from specific device
