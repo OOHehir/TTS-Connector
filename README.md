@@ -16,6 +16,7 @@ This app does NOT implement loRa on Homey, rather it uses the internet to connec
 The app assumes that your end device is connected correctly to the TTN stack v3.
 
 ### Setup (using webhook template) - preferred method
+### Template approved by TTN but waiting on activation - use next setup instead 
 1. After installing the app on Homey, go to the app 'Settings' page. It shows the 'Webhook ID' & 'Keypath Value'.
 2. On your TTN console (for [Europe](https://eu1.cloud.thethings.network/console/applications/)) select: 'Relevant Application> Integrations > Webhooks > '+ Add Webhook'> Homey Template. Fill in the details from step 1.
 3. Save!
@@ -23,12 +24,13 @@ The app assumes that your end device is connected correctly to the TTN stack v3.
 ### Setup (using custom webhook) 
 1. After installing the app on Homey, go to the app 'Settings' page. It shows the 'Webhook ID' & 'Keypath Value'.
 2. On your TTN console (for [Europe](https://eu1.cloud.thethings.network/console/applications/)) select: 'Relevant Application> Integrations > Webhooks > '+ Add Webhook'> Custom Template. Fill in the details as follows:  
-    webhook ID - whatever you like  
+    webhook ID - a meaningful name for your own use  
     webhook format - JSON   
-    BaseURL: https://webhooks.athom.com/webhook/Webhook_ID   
+    BaseURL: https://webhooks.athom.com/webhook/Webhook_ID_from_settings   
 3. Add an additional header using authorization:  
-    x-user-id      Keypath_Value    
-4. Save!
+    x-user-id      Keypath_Value_from_settings  
+4. Tick 'Uplink message' enabled box 
+5. Save!
 
 ### Flowcards
 Flows can be triggered by  
