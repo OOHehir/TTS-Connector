@@ -34,19 +34,40 @@ Flows can be triggered by
 2. Uplink message from specific device
 3. Uplink message from specific application  
 
-Using the 'payload formatters' on TTN console it is possible to convert raw bytes to more meaningful state & sensor data. Two string (state1 & state2) & two values (value1 & value2) are extracted by the app & events can then be triggered, using appropriate logic cards, depending on their contents.  
+### Payload Formatters
+Due to the low data rate of loRa data is made as compact as possible when transmitted 'over the air'. Examples of encoding schemes to compact data are shown [here](https://www.thethingsnetwork.org/docs/devices/bytes/). Using TTN payload [formatters] (https://www.thethingsindustries.com/docs/integrations/payload-formatters/) it is possible to convert this 'packed data' into more meaningful states & values before they are sent by webhook to Homey. 
 
-For example the Javascript code below sends an example of such data (hard coded in this example). There are lots more [examples](https://www.thethingsindustries.com/docs/integrations/payload-formatters/) of this.  
+Two strings (state1 & state2) & two values (value1 & value2) are extracted by this app & events can then be triggered, using appropriate logic cards, depending on their contents. An example is shown below.
 
 ```javascript
 function decodeUplink(input) {
+  
+  // Assume 4 bytes received, e.g. 0x01, 0x9F
+  // state1 & state2 must be strings/ word
+  // value1 & value2 must be numbers
+  
+  // More examples here:
+  // https://www.thethingsnetwork.org/docs/devices/bytes/
+  
+  var data = {};
+  
+    if (input.bytes[0] == 1){
+      data.state1 = "On";
+    } else{
+      data.state1 = "Off";
+    }
+    
+    if (input.bytes[1] == 1){
+      data.state2 = "Open";
+    } else{
+      data.state2 = "Closed";
+    }
+    
+    data.value1 = 5.2 * input.bytes[2];
+    data.value2 = 25 + input.bytes[3];
+    
   return {
-    data: {
-      state1: "On",
-      state2: "Off",
-      value1: 10,
-      value2: 39.64
-      },
+    data: data,
     warnings: [],
     errors: []
   };
