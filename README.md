@@ -32,6 +32,8 @@ The app assumes that your end device is connected correctly to the TTN stack v3.
 4. Tick 'Uplink message' enabled box 
 5. Save!
 
+![Custom Webhook Settings](./pictures/CustomWebhookSettings.png)
+
 ### Flowcards
 Flows can be triggered by  
 1. Uplink message
