@@ -222,5 +222,35 @@
         "id": "msg-from-end-device"
       }
     ]
-  }
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "End Device"
+      },
+      "class": "other",
+      "capabilities": [
+        "onoff"
+      ],
+      "images": {
+        "small": "/drivers/end-device/assets/images/small.png",
+        "large": "/drivers/end-device/assets/images/large.png",
+        "xlarge": "/drivers/end-device/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "end-device"
+    }
+  ]
 }
