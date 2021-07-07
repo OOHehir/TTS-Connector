@@ -16,7 +16,6 @@ This app does NOT implement loRa on Homey, rather it uses the internet to connec
 The app assumes that your end device is connected correctly to the TTN stack v3.
 
 ### Setup (using webhook template) - preferred method
-### Template approved by TTN but waiting on activation - use next setup instead 
 1. After installing the app on Homey, go to the app 'Settings' page. It shows the 'Webhook ID' & 'Keypath Value'.
 2. On your TTN console (for [Europe](https://eu1.cloud.thethings.network/console/applications/)) select: 'Relevant Application> Integrations > Webhooks > '+ Add Webhook'> Homey Template. Fill in the details from step 1.
 3. Save!
