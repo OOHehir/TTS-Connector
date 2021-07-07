@@ -10,7 +10,6 @@ If you like this app & want to support further development please consider buyin
 Forum discussion on this [app](https://community.athom.com/t/48869).  
 
 ### Note
-I am not affiliated to 'The Things Network', this is my own work to hopefully help others integrate Homey & TTN.  
 This app does NOT implement loRa on Homey, rather it uses the internet to connect to TTN servers & pass data back & forth. From the TTN servers the data is relayed via LoRaWAN gateways to end devices. For more info start [here](https://www.thethingsindustries.com/docs/getting-started/quick-start/)   
 
 The app assumes that your end device is connected correctly to the TTN stack v3.
