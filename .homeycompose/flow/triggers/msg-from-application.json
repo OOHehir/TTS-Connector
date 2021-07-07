@@ -1,6 +1,6 @@
 {
   "title": {
-    "en": "Uplink message from an application"
+    "en": "Uplink message from specific application"
   },
   "hint": {
     "en": "Filter uplink message by TTN application ID"

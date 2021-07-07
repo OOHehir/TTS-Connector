@@ -1,6 +1,6 @@
 {
   "title": {
-    "en": "Uplink message from an end device"
+    "en": "Uplink message from specific end device"
   },
   "hint": {
     "en": "Filter uplink message by TTN end device ID"

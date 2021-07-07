@@ -40,10 +40,13 @@
     "triggers": [
       {
         "title": {
-          "en": "msg-from-any-device"
+          "en": "Uplink message"
         },
         "hint": {
-          "en": "Message from any TTN device"
+          "en": "Message from any TTN device or application"
+        },
+        "titleFormatted": {
+          "en": "Uplink message from TTN"
         },
         "tokens": [
           {
@@ -93,13 +96,13 @@
       },
       {
         "title": {
-          "en": "Uplink message from TTN application"
+          "en": "Uplink message from specific application"
         },
         "hint": {
-          "en": "Message from a specific application"
+          "en": "Filter uplink message by TTN application ID"
         },
         "titleFormatted": {
-          "en": "Uplink from specific application [[application_id]]"
+          "en": "Uplink message from TTN application ID [[application_id]]"
         },
         "args": [
           {
@@ -158,13 +161,13 @@
       },
       {
         "title": {
-          "en": "Uplink message from TTN end device"
+          "en": "Uplink message from specific end device"
         },
         "hint": {
-          "en": "Message from specific end device"
+          "en": "Filter uplink message by TTN end device ID"
         },
         "titleFormatted": {
-          "en": "Uplink from end device [[end_device_id]]"
+          "en": "Uplink message from TTN end device ID [[end_device_id]]"
         },
         "args": [
           {
