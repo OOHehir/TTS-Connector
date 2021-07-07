@@ -1,11 +1,11 @@
 {
   "title": {
-    "en": "Uplink message from TTN end device"
+    "en": "Uplink message from an end device"
   },
   "hint": {
-    "en": "Message from specific end device"
+    "en": "Filter uplink message by TTN end device ID"
   },
-  "titleFormatted": { "en": "Uplink from end device [[end_device_id]]"},
+  "titleFormatted": { "en": "Uplink message from TTN end device ID [[end_device_id]]"},
   "args": [
     {
       "name": "end_device_id",

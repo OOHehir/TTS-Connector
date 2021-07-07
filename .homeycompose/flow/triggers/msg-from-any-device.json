@@ -1,10 +1,11 @@
 {
   "title": {
-    "en": "msg-from-any-device"
+    "en": "Uplink Message"
   },
   "hint": {
-    "en": "Message from any TTN device"
+    "en": "Message from any TTN device or application"
   },
+  "titleFormatted": { "en": "Uplink message from TTN"},
   "tokens": [
     {
       "type": "string",
