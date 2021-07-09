@@ -83,7 +83,7 @@ It is possible to test that the integration works without an actual loRa end dev
 
 This is accomplished by:  
 1. Setting up the payload formatter as above.
-2. Setting up the Homey [![Flow](https://flow-api.athom.com/api/flow/FUTQcG/image)](https://homey.app/f/FUTQcG/)
+2. Setting up the Homey [Flow](https://homey.app/f/FUTQcG/)
 3. Simulating an uplink message ('Relevant Application> Integrations > End Devices > Relevant End Device > Messaging & use the message as below).  
 
 ![Uplink Test Message](pictures/UplinkTestMesg.png)
