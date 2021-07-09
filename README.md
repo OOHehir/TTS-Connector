@@ -78,7 +78,15 @@ function decodeUplink(input) {
   };
 }
 ```
+### Test
+It is possible to test that the integration works without an actual loRa end device by simulating an uplink message from TTN.  
 
+This is accomplished by:  
+1. Setting up the payload formatter as above.
+2. Setting up the Homey [flow]([![Flow](https://flow-api.athom.com/api/flow/FUTQcG/image)](https://homey.app/f/FUTQcG/))
+3. Simulating an uplink message ('Relevant Application> Integrations > End Devices > Relevant End Device > Messaging & use the message as below).  
+
+![Uplink Test Message](pictures/UplinkTestMesg.png)
 
 **Version 0.0.1**
 - Initial release

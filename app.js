@@ -58,19 +58,45 @@ class App extends Homey.App {
       if (typeof args.body.uplink_message) {
         var end_device_id = args.body.end_device_ids.device_id;			// device_id: '2232330000889909',
         var application_id = args.body.end_device_ids.application_ids.application_id; // application_ids: { application_id: 'heltec-esp32-otaa-led1' }
-        var f_port = args.body.uplink_message.f_port;
-        var f_cnt = args.body.uplink_message.f_cnt;
-        var frm_payload = args.body.uplink_message.frm_payload;	// 'AAECAw==',
-        var decoded_payload_state1 = args.body.uplink_message.decoded_payload.state1;	// decoded_payload: { state1: '0' },
-        var decoded_payload_state2 = args.body.uplink_message.decoded_payload.state2;	// decoded_payload: { state2: '0' },
-        var decoded_payload_value1 = args.body.uplink_message.decoded_payload.value1;	// decoded_payload: { value1: '0' },
-        var decoded_payload_value2 = args.body.uplink_message.decoded_payload.value2;	// decoded_payload: { value2: '0' },
-        //var payload_warnings = args.body.uplink_message.decoded_payload_warnings;	// decoded_payload_warnings: [],
+        var f_port = args.body.uplink_message.f_port || null;
+        var f_cnt = args.body.uplink_message.f_cnt || null;
+
+        var raw_payload = args.body.uplink_message.frm_payload || null;	// 'AAECAw==',
+
+        if (args.body.uplink_message.decoded_payload != undefined) {
+          this.log('decoded payload received');
+          // Check a decoded payload exits
+          try {
+            var decoded_payload_state1 = args.body.uplink_message.decoded_payload.state1;	// decoded_payload: { state1: '0' },
+          } catch(err) {
+            decoded_payload_state1 = 'none';
+          }
+
+          try {
+            var decoded_payload_state2 = args.body.uplink_message.decoded_payload.state2;	// decoded_payload: { state2: '0' },
+          } catch(err) {
+            var decoded_payload_state2 = "none";
+          }
+
+          try {
+            var decoded_payload_value1 = args.body.uplink_message.decoded_payload.value1;	// decoded_payload: { value1: '0' },
+          } catch(err) {
+            var decoded_payload_value1 = 0;
+          }
+
+          try {
+            var decoded_payload_value2 = args.body.uplink_message.decoded_payload.value2;	// decoded_payload: { value2: '0' },
+          } catch(err){
+            var decoded_payload_value2 = 0;
+          }
+        }
+
+        var payload_warnings = args.body.uplink_message.decoded_payload_warnings || '';	// decoded_payload_warnings: [],
 
         this.log('Msg from device_id: ' + end_device_id + ' with application_id: ' + application_id);
-        this.log('Frame port: ' + f_port + ', frame count: ' + f_cnt + ', frame payload (Base64): ' + frm_payload +
+        this.log('Frame port: ' + f_port + ', frame count: ' + f_cnt + ', frame payload (Base64): ' + raw_payload +
           ', decoded payload object (decoded by the device payload formatter) state1: ' + decoded_payload_state1 +
-          ', state2: ' + decoded_payload_state2 + ', value1: ' + decoded_payload_value1, + ', value2: ' + decoded_payload_value2);
+          ', state2: ' + decoded_payload_state2 + ', value1: ' + decoded_payload_value1 + ', value2: ' + decoded_payload_value2);
 
         cardTriggerSpecificDevice.trigger({
           end_device_id: end_device_id || '',
