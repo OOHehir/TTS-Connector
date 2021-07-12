@@ -25,7 +25,7 @@ The app assumes that your end device is connected correctly to the TTN stack v3.
 2. On your TTN console (for [Europe](https://eu1.cloud.thethings.network/console/applications/)) select: 'Relevant Application> Integrations > Webhooks > '+ Add Webhook'> Custom Template. Fill in the details as follows:  
     webhook ID - a meaningful name for your own use  
     webhook format - JSON   
-    BaseURL: https://webhooks.athom.com/webhook/Webhook_ID_from_settings   
+    BaseURL: https://webhooks.athom.com/webhook/60df8366132fac0be2bb85eb   
 3. Add an additional header using authorization:  
     x-user-id      Keypath_Value_from_settings  
 4. Tick 'Uplink message' enabled box 
