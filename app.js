@@ -53,7 +53,7 @@ class App extends Homey.App {
       this.log('Got a webhook message!');
       //this.log('headers:', args.headers);
       //this.log('query:', args.query);
-      //this.log('body:', args.body);
+      this.log('body:', args.body);
 
       if (typeof args.body.uplink_message) {
         var end_device_id = args.body.end_device_ids.device_id || '';			// device_id: '2232330000889909',
@@ -68,29 +68,35 @@ class App extends Homey.App {
           try {
             var decoded_payload_state1 = args.body.uplink_message.decoded_payload.state1;	// decoded_payload: { state1: '0' },
           } catch(err) {
-            this.log('state1 not found');
             decoded_payload_state1 = '';
           }
 
           try {
             var decoded_payload_state2 = args.body.uplink_message.decoded_payload.state2;	// decoded_payload: { state2: '0' },
           } catch(err) {
-            this.log('state2 not found');
             var decoded_payload_state2 = '';
           }
 
           try {
-            var decoded_payload_value1 = args.body.uplink_message.decoded_payload.value1;	// decoded_payload: { value1: '0' },
-          } catch(err) {
-            this.log('value1 not found');
-            var decoded_payload_value1 = '';
+            if (args.body.uplink_message.decoded_payload.value1 !== 'NaN'){
+              var decoded_payload_value1 = args.body.uplink_message.decoded_payload.value1;	// decoded_payload: { value2: '0' },
+            }
+            else{
+              var decoded_payload_value1 = null;
+            }
+          } catch(err){
+            var decoded_payload_value1 = null;
           }
 
           try {
-            var decoded_payload_value2 = args.body.uplink_message.decoded_payload.value2;	// decoded_payload: { value2: '0' },
+            if (args.body.uplink_message.decoded_payload.value2 !== 'NaN'){
+              var decoded_payload_value2 = args.body.uplink_message.decoded_payload.value2;	// decoded_payload: { value2: '0' },
+            }
+            else{
+              var decoded_payload_value2 = null;
+            }
           } catch(err){
-            this.log('value2 not found');
-            var decoded_payload_value2 = '';
+            var decoded_payload_value2 = null;
           }
         }
 
@@ -101,34 +107,23 @@ class App extends Homey.App {
           ', decoded payload object (decoded by the device payload formatter) state1: ' + decoded_payload_state1 +
           ', state2: ' + decoded_payload_state2 + ', value1: ' + decoded_payload_value1 + ', value2: ' + decoded_payload_value2);
 
-        cardTriggerSpecificDevice.trigger({
-          end_device_id: end_device_id || '',
-          application_id: application_id || '',
-          state1: decoded_payload_state1 || '',
-          state2: decoded_payload_state2 || '',
-          value1: decoded_payload_value1 || '',
-          value2: decoded_payload_value2 || ''
-        }, { 'end_device_id': end_device_id })
+        // TODO: Breaks if any token omitted/ not a proper value
+        let tokens = {
+          end_device_id: end_device_id,
+          application_id: application_id,
+          state1: decoded_payload_state1,
+          state2: decoded_payload_state2,
+          value1: decoded_payload_value1,
+          value2: decoded_payload_value2
+        };
+
+        cardTriggerSpecificDevice.trigger(tokens, { 'end_device_id': end_device_id })
           .then(console.log('event triggered for cardTriggerSpecificDevice: ' + end_device_id))
           .catch(this.error);
-        cardTriggerAnyDevice.trigger({
-          end_device_id: end_device_id || '',
-          application_id: application_id || '',
-          state1: decoded_payload_state1 || '',
-          state2: decoded_payload_state2 || '',
-          value1: decoded_payload_value1 || '',
-          value2: decoded_payload_value2 || ''
-        }, {})
+        cardTriggerAnyDevice.trigger(tokens, {})
           .then(console.log('event triggered for cardTriggerAnyDevice: ' + end_device_id))
           .catch(this.error);
-        cardTriggerSpecificApplication.trigger({
-          end_device_id: end_device_id || '',
-          application_id: application_id || '',
-          state1: decoded_payload_state1 || '',
-          state2: decoded_payload_state2 || '',
-          value1: decoded_payload_value1 || '',
-          value2: decoded_payload_value2 || ''
-        }, { 'application_id': application_id })
+        cardTriggerSpecificApplication.trigger(tokens, { 'application_id': application_id })
           .then(console.log('event triggered for cardTriggerSpecificApplication: ' + application_id))
           .catch(this.error);
       }
