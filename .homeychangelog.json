@@ -4,5 +4,8 @@
   },
   "0.0.2": {
     "en": "Renamed trigger cards & updated README.txt"
+  },
+  "0.0.3": {
+    "en": "Improved JSON parsing"
   }
 }
