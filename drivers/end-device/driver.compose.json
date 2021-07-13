@@ -18,6 +18,10 @@
       "navigation": { "next": "add_devices" }
     },
     {
+      "id": "loading",
+      "template": "loading"
+    },
+    {
       "id": "add_devices",
       "template": "add_devices"
     }

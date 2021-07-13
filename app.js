@@ -53,53 +53,77 @@ class App extends Homey.App {
       this.log('Got a webhook message!');
       //this.log('headers:', args.headers);
       //this.log('query:', args.query);
-      //this.log('body:', args.body);
+      this.log('body:', args.body);
 
       if (typeof args.body.uplink_message) {
-        var end_device_id = args.body.end_device_ids.device_id;			// device_id: '2232330000889909',
-        var application_id = args.body.end_device_ids.application_ids.application_id; // application_ids: { application_id: 'heltec-esp32-otaa-led1' }
-        var f_port = args.body.uplink_message.f_port;
-        var f_cnt = args.body.uplink_message.f_cnt;
-        var frm_payload = args.body.uplink_message.frm_payload;	// 'AAECAw==',
-        var decoded_payload_state1 = args.body.uplink_message.decoded_payload.state1;	// decoded_payload: { state1: '0' },
-        var decoded_payload_state2 = args.body.uplink_message.decoded_payload.state2;	// decoded_payload: { state2: '0' },
-        var decoded_payload_value1 = args.body.uplink_message.decoded_payload.value1;	// decoded_payload: { value1: '0' },
-        var decoded_payload_value2 = args.body.uplink_message.decoded_payload.value2;	// decoded_payload: { value2: '0' },
-        //var payload_warnings = args.body.uplink_message.decoded_payload_warnings;	// decoded_payload_warnings: [],
+        var end_device_id = args.body.end_device_ids.device_id || '';			// device_id: '2232330000889909',
+        var application_id = args.body.end_device_ids.application_ids.application_id || ''; // application_ids: { application_id: 'heltec-esp32-otaa-led1' }
+        var f_port = args.body.uplink_message.f_port || '';
+        var f_cnt = args.body.uplink_message.f_cnt || '';
+        var raw_payload = args.body.uplink_message.frm_payload || '';	// 'AAECAw==',
+
+        if (args.body.uplink_message.decoded_payload != undefined) {
+          this.log('decoded payload received');
+          // Check a decoded payload exits
+          try {
+            var decoded_payload_state1 = args.body.uplink_message.decoded_payload.state1;	// decoded_payload: { state1: '0' },
+          } catch(err) {
+            decoded_payload_state1 = '';
+          }
+
+          try {
+            var decoded_payload_state2 = args.body.uplink_message.decoded_payload.state2;	// decoded_payload: { state2: '0' },
+          } catch(err) {
+            var decoded_payload_state2 = '';
+          }
+
+          try {
+            if (args.body.uplink_message.decoded_payload.value1 !== 'NaN'){
+              var decoded_payload_value1 = args.body.uplink_message.decoded_payload.value1;	// decoded_payload: { value2: '0' },
+            }
+            else{
+              var decoded_payload_value1 = null;
+            }
+          } catch(err){
+            var decoded_payload_value1 = null;
+          }
+
+          try {
+            if (args.body.uplink_message.decoded_payload.value2 !== 'NaN'){
+              var decoded_payload_value2 = args.body.uplink_message.decoded_payload.value2;	// decoded_payload: { value2: '0' },
+            }
+            else{
+              var decoded_payload_value2 = null;
+            }
+          } catch(err){
+            var decoded_payload_value2 = null;
+          }
+        }
+
+        var payload_warnings = args.body.uplink_message.decoded_payload_warnings || '';	// decoded_payload_warnings: [],
 
         this.log('Msg from device_id: ' + end_device_id + ' with application_id: ' + application_id);
-        this.log('Frame port: ' + f_port + ', frame count: ' + f_cnt + ', frame payload (Base64): ' + frm_payload +
+        this.log('Frame port: ' + f_port + ', frame count: ' + f_cnt + ', frame payload (Base64): ' + raw_payload +
           ', decoded payload object (decoded by the device payload formatter) state1: ' + decoded_payload_state1 +
-          ', state2: ' + decoded_payload_state2 + ', value1: ' + decoded_payload_value1, + ', value2: ' + decoded_payload_value2);
+          ', state2: ' + decoded_payload_state2 + ', value1: ' + decoded_payload_value1 + ', value2: ' + decoded_payload_value2);
 
-        cardTriggerSpecificDevice.trigger({
-          end_device_id: end_device_id || '',
-          application_id: application_id || '',
-          state1: decoded_payload_state1 || '',
-          state2: decoded_payload_state2 || '',
-          value1: decoded_payload_value1 || '',
-          value2: decoded_payload_value2 || ''
-        }, { 'end_device_id': end_device_id })
+        // TODO: Breaks if any token omitted/ not a proper value
+        let tokens = {
+          end_device_id: end_device_id,
+          application_id: application_id,
+          state1: decoded_payload_state1,
+          state2: decoded_payload_state2,
+          value1: decoded_payload_value1,
+          value2: decoded_payload_value2
+        };
+
+        cardTriggerSpecificDevice.trigger(tokens, { 'end_device_id': end_device_id })
           .then(console.log('event triggered for cardTriggerSpecificDevice: ' + end_device_id))
           .catch(this.error);
-        cardTriggerAnyDevice.trigger({
-          end_device_id: end_device_id || '',
-          application_id: application_id || '',
-          state1: decoded_payload_state1 || '',
-          state2: decoded_payload_state2 || '',
-          value1: decoded_payload_value1 || '',
-          value2: decoded_payload_value2 || ''
-        }, {})
+        cardTriggerAnyDevice.trigger(tokens, {})
           .then(console.log('event triggered for cardTriggerAnyDevice: ' + end_device_id))
           .catch(this.error);
-        cardTriggerSpecificApplication.trigger({
-          end_device_id: end_device_id || '',
-          application_id: application_id || '',
-          state1: decoded_payload_state1 || '',
-          state2: decoded_payload_state2 || '',
-          value1: decoded_payload_value1 || '',
-          value2: decoded_payload_value2 || ''
-        }, { 'application_id': application_id })
+        cardTriggerSpecificApplication.trigger(tokens, { 'application_id': application_id })
           .then(console.log('event triggered for cardTriggerSpecificApplication: ' + application_id))
           .catch(this.error);
       }
