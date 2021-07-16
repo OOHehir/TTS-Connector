@@ -2,9 +2,12 @@
 
 // https://github.com/athombv/nl.thermosmart-example/blob/master/drivers/thermostat/driver.js
 
-const { Driver } = require('homey');
+const Homey = require('homey');
 
-class MyDriver extends Driver {
+const WEBHOOK_ID = Homey.env.WEBHOOK_ID;
+const WEBHOOK_SECRET = Homey.env.WEBHOOK_SECRET;
+
+class MyDriver extends Homey.Driver {
 
   /**
    * onInit is called when the driver is initialized.
@@ -15,25 +18,35 @@ class MyDriver extends Driver {
     await this.registerWebhook();
   }
 
-  /**
-   * onPairListDevices is called when a user is adding a device
-   * and the 'list_devices' view is called.
-   * This should return an array with the data of devices that are available for pairing.
-   */
-  async onPairListDevices() {
-    return [
-      // Example device data, note that `store` is optional
-      {
-        name: 'My End Device',
-        data: {
-          id: 'my-device-001',
-        },
-        store: {
-          //address: '127.0.0.1',
-        },
-      },
-    ];
+
+  async onPair(){
+    // Use session to capture data from webhook & pass it back to this??
+
   }
+
+
+
+  // /**
+  //  * onPairListDevices is called when a user is adding a device
+  //  * and the 'list_devices' view is called.
+  //  * This should return an array with the data of devices that are available for pairing.
+  //  */
+  // async onPairListDevices() {
+  //   return [
+  //     // Example device data, note that `store` is optional
+  //     {
+  //       name: 'My End Device',
+  //       data: {
+  //         id: 'my-device-001',
+  //       },
+  //       store: {
+  //         //address: '127.0.0.1',
+  //       },
+  //     },
+  //   ];
+  // }
+
+
 
   async registerFlowCards() {
     this.log('registerFlowCards has been called');
@@ -43,10 +56,10 @@ class MyDriver extends Driver {
       Webhook methods
     */
   async registerWebhook() {
-    
-    const WEBHOOK_ID = Homey.env.WEBHOOK_ID;
-    const WEBHOOK_SECRET = Homey.env.WEBHOOK_SECRET;
-    key_path_value = this.homey.settings.get('key_path_value');
+
+    // Register one webhook for all TTN devices
+
+    const key_path_value = await this.homey.settings.get('key_path_value');
 
     if (key_path_value) {
 
@@ -64,10 +77,10 @@ class MyDriver extends Driver {
       this.homey.settings.set('key_path_value', key_path_value);
     }
 
-    const myWebhook = await this.homey.cloud.createWebhook(cloudhookID, secret, { $key: key_path_value });
+    this._webhook = await this.homey.cloud.createWebhook(WEBHOOK_ID, WEBHOOK_SECRET, { $key: key_path_value });
     this._webhook.on('message', this._onWebhookMessage.bind(this));
 
-    this.log('New webhook registered for');
+    this.log('Webhook registered');
   }
 
   async unregisterWebhook() {
@@ -82,29 +95,55 @@ class MyDriver extends Driver {
     if (!body) return;
 
     const {
-      thermostat: thermostatId,
-      room_temperature,
-      target_temperature,
-      source,
+      end_device_ids: {
+        device_id: deviceId,
+        application_ids: {
+          application_id: applicationId
+        },
+        dev_eui: devEui,
+        dev_addr: devAddr
+      },
+      uplink_message: {
+        f_port: fPort,
+        f_cnt: fCnt,
+        frm_payload: fmtPayload,
+        decoded_payload:
+        { state1: state1,
+          state2: state2,
+          value1: value1,
+          value2: value2
+        }
+      }
     } = body;
-    if (!thermostatId) return;
 
-    const device = this.getDevices().find(device => device.getData().id === thermostatId);
+    if (!deviceId) return;
 
-    if (!device)
+    this.log('deviceID: ' + deviceId);
+    this.log('applicationId: ' + applicationId);
+    this.log('devEui: ' + devEui);
+    this.log('devAddr: ' + devAddr);
+    this.log('fPort: ' + fPort);
+    this.log('fCnt: ' + fCnt);
+    this.log('fmtPayload: ' + fmtPayload);
+    this.log('state1: ' + state1);
+    this.log('state2: ' + state2);
+    this.log('value1: ' + value1);
+    this.log('value2: ' + value2);
+
+    // Try to find the device that matches the data?
+    const device = this.getDevices().find(device => device.getData().id === deviceId);
+
+    if (!device) {
       return this.error('Got webhook for unknown device');
-
-    if (typeof room_temperature === 'number') {
-      device.setCapabilityValue('measure_temperature', room_temperature).catch(this.error);
+    }
+    else {
+      this.log('webhook matched to deviceId: ' + device);
     }
 
-    if (typeof target_temperature === 'number') {
-      device.setCapabilityValue('target_temperature', target_temperature).catch(this.error);
+    if (typeof state1 === 'string') {
+      device.setCapabilityValue('onoff', state1).catch(this.error);
     }
 
-    if (typeof source === 'string') {
-      this.triggerPaused(device, source === 'pause').catch(this.error)
-    }
   }
 
 }
