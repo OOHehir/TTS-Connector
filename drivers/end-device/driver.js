@@ -2,12 +2,28 @@
 
 // https://github.com/athombv/nl.thermosmart-example/blob/master/drivers/thermostat/driver.js
 
+// https://github.com/athombv/nl.eneco.toon-example/blob/main/drivers/toon/driver.js
+
+// https://github.com/XattSPT/io.flic/blob/ebb533bb22e9ab2c37e3e9e659f8a79085f4d082/lib/FlicDriver.js
+
 const Homey = require('homey');
 
 const WEBHOOK_ID = Homey.env.WEBHOOK_ID;
 const WEBHOOK_SECRET = Homey.env.WEBHOOK_SECRET;
 
+let newDevice = {
+  downlinkApikey: '',
+  downlinkPush: '',
+  downlinkReplace: '',
+  id: '',
+  applicationId: '',
+  devEui: '',
+  devAddr: ''
+};
+let newDeviceFound = false;
+
 class MyDriver extends Homey.Driver {
+
 
   /**
    * onInit is called when the driver is initialized.
@@ -18,38 +34,32 @@ class MyDriver extends Homey.Driver {
     await this.registerWebhook();
   }
 
+  async onPairListDevices() {
 
-  async onPair(){
-    // Use session to capture data from webhook & pass it back to this??
+    if (!newDevice.id)
+      return [];
 
+    const devices = [
+      {
+        name: "TTN End Device",
+          // Data contains only unique properties for the device.
+        data: {
+          id: newDevice.id,
+        },
+        store: {
+          // Store is dynamic and persistent storage for your device
+          applicationId: newDevice.applicationId,
+          devEui: newDevice.devEui,
+          devAddr: newDevice.devAddr,
+        },
+      },
+    ];
+    return devices;
   }
-
-
-
-  // /**
-  //  * onPairListDevices is called when a user is adding a device
-  //  * and the 'list_devices' view is called.
-  //  * This should return an array with the data of devices that are available for pairing.
-  //  */
-  // async onPairListDevices() {
-  //   return [
-  //     // Example device data, note that `store` is optional
-  //     {
-  //       name: 'My End Device',
-  //       data: {
-  //         id: 'my-device-001',
-  //       },
-  //       store: {
-  //         //address: '127.0.0.1',
-  //       },
-  //     },
-  //   ];
-  // }
-
-
 
   async registerFlowCards() {
     this.log('registerFlowCards has been called');
+
   }
 
   /*
@@ -57,7 +67,15 @@ class MyDriver extends Homey.Driver {
     */
   async registerWebhook() {
 
-    // Register one webhook for all TTN devices
+    // Register one webhook for all devices
+
+    if (WEBHOOK_ID === '') {
+      this.log('No webhook ID found, please check env.json');
+    }
+
+    if (this._webhook) {
+      await this.unregisterWebhook().catch(this.error);
+    }
 
     const key_path_value = await this.homey.settings.get('key_path_value');
 
@@ -90,9 +108,17 @@ class MyDriver extends Homey.Driver {
     }
   }
 
-  _onWebhookMessage({ body }) {
-    this.log('_onWebhookMessage', body);
+  _onWebhookMessage({ headers, body }) {
+
     if (!body) return;
+    this.log('_onWebhookMessage', headers);
+    this.log('_onWebhookMessage', body);
+
+    const {
+      'x-downlink-apikey': downlinkApikey,
+      'x-downlink-push': downlinkPush,
+      'x-downlink-replace': downlinkReplace
+    } = headers;
 
     const {
       end_device_ids: {
@@ -131,16 +157,24 @@ class MyDriver extends Homey.Driver {
     this.log('value2: ' + value2);
 
     // Try to find the device that matches the data?
-    const device = this.getDevices().find(device => device.getData().id === deviceId);
+    const device = this.getDevices().find(device => device.getData().ttnId === deviceId);
 
     if (!device) {
-      return this.error('Got webhook for unknown device');
+      this.error('Got webhook for new device');
+      newDevice.downlinkApikey = downlinkApikey,
+      newDevice.downlinkPush = downlinkPush,
+      newDevice.downlinkReplace = downlinkReplace,
+      newDevice.id = deviceId;
+      newDevice.applicationId = applicationId;
+      newDevice.devEui = devEui;
+      newDevice.devAddr = devAddr;
+
+      newDeviceFound = true;
+
+      this.log(newDevice);
     }
     else {
       this.log('webhook matched to deviceId: ' + device);
-    }
-
-    if (typeof state1 === 'string') {
       device.setCapabilityValue('onoff', state1).catch(this.error);
     }
 

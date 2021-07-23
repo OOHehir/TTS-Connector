@@ -14,6 +14,13 @@
     "internet"
   ],
   "permissions": [],
+  "api": {
+    "postUpdate": {
+      "method": "POST",
+      "path": "/update",
+      "public": true
+    }
+  },
   "images": {
     "small": "/assets/images/small.png",
     "large": "/assets/images/large.png",
