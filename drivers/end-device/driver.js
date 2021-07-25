@@ -12,14 +12,15 @@ const WEBHOOK_ID = Homey.env.WEBHOOK_ID;
 const WEBHOOK_SECRET = Homey.env.WEBHOOK_SECRET;
 
 let newDevice = {
+  id: '',
+  devEui: '',
+  applicationId: '',
+  devAddr: '',
   downlinkApikey: '',
   downlinkPush: '',
   downlinkReplace: '',
-  id: '',
-  applicationId: '',
-  devEui: '',
-  devAddr: ''
 };
+
 let newDeviceFound = false;
 
 class MyDriver extends Homey.Driver {
@@ -36,24 +37,32 @@ class MyDriver extends Homey.Driver {
 
   async onPairListDevices() {
 
-    if (!newDevice.id)
+    if (!newDevice.id) {
+      this.log('No device found to pair');
       return [];
+    }
 
     const devices = [
       {
         name: "TTN End Device",
-          // Data contains only unique properties for the device.
+        // Data contains only unique properties for the device.
         data: {
           id: newDevice.id,
         },
         store: {
           // Store is dynamic and persistent storage for your device
-          applicationId: newDevice.applicationId,
           devEui: newDevice.devEui,
+          applicationId: newDevice.applicationId,
           devAddr: newDevice.devAddr,
+          downlinkApikey: newDevice.downlinkApikey,
+          downlinkPush: newDevice.downlinkPush,
+          downlinkReplace: newDevice.downlinkReplace,
         },
       },
     ];
+
+    this.log('Device found to pair');
+
     return devices;
   }
 
