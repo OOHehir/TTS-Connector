@@ -11,22 +11,8 @@ class MyDevice extends Device {
   async onInit() {
     this.log('MyDevice has been initialized');
 
-    // Send state change from Homey to device
-    // Need to send this via webhook to TTN
-    this.registerCapabilityListener('onoff', async (value) => {
-     
-      // Returns response status
-      let res = await this.downlinkMsg().catch(this.error);
-      this.log(res);
-      if (res === 200){
-        this.log("Downlink successful");
-      }
-      else{
-        this.log("Downlink fail");
-      }
-      
-
-    })
+    // Send state change from Homey to device (via Webhook)
+    this.registerCapabilityListener('onoff', this._onCapabilitySetOnOff.bind(this));
 
     // Set state (e.g. on receipt of webhook)
     // this.setCapabilityValue('onoff', true).catch(this.error)
@@ -36,30 +22,26 @@ class MyDevice extends Device {
     // this.setUnavailable();
   }
 
-  // this method is called when the Device has requested a state change (turned on or off)
-  //   async onCapabilityOnoff(value, opts) {
-  //     this.log('Devices has requested a state change to ' + value);
-
-  // ... set value to real device, e.g.
-  // await setMyDeviceState({ on: value });
-  // or, throw an error
-  // throw new Error('Switching the device failed!');
-  //}
-
   /**
    * onAdded is called when the user adds the device, called just after pairing.
    */
   async onAdded() {
-    let deviceData = await this.getData();
-    let deviceStore = await this.getStore();
+    let data = await this.getData();
+    let store = await this.getStore();
 
-    this.log('MyDevice has been added:' + deviceData.id);
-    this.log('applicationId: ' + deviceStore.applicationId);
-    this.log('devEui: ' + deviceStore.devEui);
-    this.log('devAddr: ' + deviceStore.devAddr);
+    this.log('MyDevice has been added: ' + data.id);
+    this.log('applicationId: ' + store.applicationId);
+    this.log('devEui: ' + devEui);
+    this.log('devAddr: ' + store.devAddr);
 
-    // TODO:
-    // this.onInit();
+
+
+    const settings = this.getSettings();
+    settings["devEui"] = devEui;
+
+    console.log("settings are:");
+    console.log(settings.username);
+
   }
 
   /**
@@ -97,37 +79,183 @@ class MyDevice extends Device {
     }
   }
 
+  /*
+    Capabilities
+  */
 
-  async downlinkMsg(downlinkData = "vu8=", downlinkPort = 1, downlinkPriority = "NORMAL") {
-    let deviceStore = await this.getStore();
+ // Send state change from Homey to device (via Webhook)
+  async _onCapabilitySetOnOff(onoff) {
+    this.log("onoff capability called");
+    // Should be of form: {"state1":"false"}
+    let payload = `{"state1": "${onoff}"}`;
+    this.log("payload:");
+    this.log(payload);
+    return this.sendData(payload);
+  }
 
-    if (!deviceStore.downlinkApikey || !deviceStore.downlinkPush) {
-      this.error('Missing end device downlink URL or API key');
+  /*
+    Methods
+  */
+
+  /**
+   * Send data to end device
+   * @param {string} payload
+   * @return {boolean} true/ false
+   */
+  async sendData(payload) {
+    let res = await this.downlinkMsg(payload, 1, undefined).catch(this.error);
+    this.log(res);
+    if (res === 200) {
+      this.log("Downlink successful");
+      return true;
+    }
+    else {
+      this.log("Downlink fail");
+      return false;
+    }
+  }
+
+  async onUplinkMessage({ headers, body }) {
+
+    const {
+      'x-downlink-apikey': downlinkApikey,
+      'x-downlink-push': downlinkPush,
+      'x-downlink-replace': downlinkReplace
+    } = headers;
+
+    const {
+      end_device_ids: {
+        device_id: deviceId,
+        application_ids: {
+          application_id: applicationId
+        },
+        dev_eui: devEui,
+        dev_addr: devAddr
+      },
+      uplink_message: {
+        f_port: fPort,
+        f_cnt: fCnt,
+        frm_payload: fmtPayload,
+        decoded_payload:
+        { state1: state1,
+          state2: state2,
+          value1: value1,
+          value2: value2
+        }
+      }
+    } = body;
+
+    this.log("Uplink headers:");
+    this.log(headers);
+    this.log("Uplink Body:");
+    this.log(body);
+
+    // Device has changed state, update Homey
+    if (typeof state1 === 'string' || state1 instanceof String) {
+
+      if (state1.toLowerCase() === 'on'){
+        this.setCapabilityValue('onoff', true).catch(this.error);
+        this.log("CapabilityOnoff set on");
+      }
+      else if (state1.toLowerCase() === 'off') {
+        this.setCapabilityValue('onoff', false).catch(this.error);
+        this.log("CapabilityOnoff set off");
+      }
+    }
+    else{
+      this.log("state1 is type of" + typeof state1);
+    }
+
+    let device = this; // We're in a Device instance
+
+    let tokens = {
+      end_device_id: deviceId,
+      application_id: applicationId,
+      state1: state1,
+      state2: state2,
+      value1: value1,
+      value2: value2
+    };
+
+    let state = { state1 };
+
+    this.driver.triggerMessageReceivedFlow(device, tokens, state);
+
+    let store = await this.getStore();
+    // Keep a track of uplinks
+    store.uplinkCount = store.uplinkCount++;
+
+    // Check if values need to be updated
+    if (downlinkApikey === 'string' && store.downlinkApikey != downlinkApikey) {
+      this.log("downlinkApikey updated");
+      setStoreValue(downlinkApikey, downlinkApikey);
+    } else {
+      this.log("downlinkApikey valid");
+    }
+
+    if (downlinkPush === 'string' && store.downlinkPush != downlinkPush) {
+      this.log("downlinkPush updated");
+      setStoreValue(downlinkPush, downlinkPush);
+    } else {
+      this.log("downlinkPush valid");
+    }
+
+    if (downlinkReplace === 'string' && store.downlinkReplace != downlinkReplace) {
+      this.log("downlinkReplace updated");
+      setStoreValue(downlinkReplace, downlinkReplace);
+    } else {
+      this.log("downlinkReplace valid");
+    }
+
+  }
+  /**
+   * downlinkMsg is used to send a downlink message to a TTN end device
+   * @param {string} downlinkData plain language data to send
+   * @param {integer} downlinkPort port number to send data on
+   * @param {string} downlinkPriority priority for message (from TTN network)
+   * @returns {Promise<integer>} returns response status 
+   */
+  async downlinkMsg(downlinkData, downlinkPort = 1, downlinkPriority = "NORMAL") {
+    let store = await this.getStore();
+
+    if (!downlinkData) {
+      throw new Error('No data to send');
+    }
+
+    if (!store.downlinkApikey || !store.downlinkPush) {
       throw new Error('Missing end device downlink URL or API key');
     }
 
-    // https://www.thethingsindustries.com/docs/integrations/webhooks/scheduling-downlinks/#scheduling-downlinks
+    // Keep track of downlinks
+    store.downlinkCount = store.downlinkCount++;
+
+    // https://www.thethingsindustries.com/docs/getting-started/api/#schedule-downlink
 
     const requestOptions = {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${deviceStore.downlinkApikey}`,
+        'Authorization': `Bearer ${store.downlinkApikey}`,
         'Content-Type': 'application/json'
       },
-      body: `{"downlinks":[{"frm_payload":"${downlinkData}","f_port":${downlinkPort},"priority":"${downlinkPriority}"}]}`
+      // body: `{"downlinks":[{"frm_payload":"${downlinkData}","f_port":${downlinkPort},"priority":"${downlinkPriority}"}]}`
+      // Decoded payload
+      body: `{"downlinks": [{"decoded_payload": {"data": ${downlinkData}},"f_port": ${downlinkPort},"priority":"${downlinkPriority}"}]}`
     };
 
-    //this.log('requestOptions = :');
-    //this.log(requestOptions);
+    this.log('requestOptions = :');
+    this.log(requestOptions);
 
-    let response = await fetch(`${deviceStore.downlinkPush}`,requestOptions);
+    let response = await fetch(`${store.downlinkPush}`, requestOptions);
+
+    this.log('Server response:');
+    this.log(response);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
-    }else if(response.ok){
-     // this.log("Downlink OK");
+    } else if (response.ok) {
+      // this.log("Downlink OK");
     }
-  
+
     return response.status;
   }
 }

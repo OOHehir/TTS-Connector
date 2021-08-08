@@ -1,0 +1,75 @@
+{
+  "triggers": [
+    {
+      "id": "a-message-is-received",
+      "title": {
+        "en": "A message is received"
+      },
+      "tokens": [
+        {
+          "type": "boolean",
+          "name": "state1",
+          "title": {
+            "en": "state1"
+          },
+          "example": {
+            "en": "On or Off"
+          }
+        },
+        {
+          "type": "boolean",
+          "name": "state2",
+          "title": {
+            "en": "state2"
+          },
+          "example": {
+            "en": "Open or Closed"
+          }
+        },
+        {
+          "type": "number",
+          "name": "value1",
+          "title": {
+            "en": "value1"
+          },
+          "example": {
+            "en": "number"
+          }
+        },
+        {
+          "type": "number",
+          "name": "value2",
+          "title": {
+            "en": "value2"
+          },
+          "example": {
+            "en": "number"
+          }
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "send-data-to-end-device",
+      "title": {
+        "en": "Send Data to End Device"
+      },
+      "titleFormatted": { 
+        "en": "Send Data to End Device [[payload]]" 
+      },
+      "hint": {
+        "en": "Send Data to Specific End Device"
+      },
+      "args": [
+        {
+          "type": "text",
+          "name": "payload",
+          "placeholder": {
+            "en": "Text, Number or Boolean"
+          }
+        }
+      ]
+    }
+  ]
+}
