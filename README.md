@@ -1,3 +1,12 @@
+# Development version - only for testing!
+Changes:
+Many of the flowcards are broken
+Implements end devices as individual devices on app
+Only simple on/ off supported at the moment
+When a webhook is received the app records the downlinkApi Key for later use
+
+To add a device go into the pairing mode on the Homey app & trigger an uplink from the TTN console. If the end device hasn't been seen before it will be added as a new end device
+
 # The Things Network
 
 Make Homey part of a global loRaWAN network using The Things Network (TTN) & webhooks.
@@ -14,7 +23,7 @@ This app does NOT implement loRa on Homey, rather it uses the internet to connec
 The app assumes that your end device is connected correctly to the TTN stack v3.
 
 ### Setup (using webhook template) - preferred method
-1. After installing the app on Homey, go to the app 'Settings' page. It shows the 'Webhook ID' & 'Keypath Value'.
+1. After installing the app on Homey, go to the app 'Configure App' page. It shows the 'Webhook ID' & 'Keypath Value'.
 2. On your TTN console (for [Europe](https://eu1.cloud.thethings.network/console/applications/)) select: 'Relevant Application> Integrations > Webhooks > '+ Add Webhook'> Homey Template. Fill in the details from step 1.
 3. Save!
 
