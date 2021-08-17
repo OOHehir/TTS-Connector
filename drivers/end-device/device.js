@@ -14,6 +14,7 @@ class MyDevice extends Device {
     // Send state change from Homey to device (via Webhook)
     this.registerCapabilityListener('onoff', this._onCapabilitySetOnOff.bind(this));
 
+
     // Set state (e.g. on receipt of webhook)
     // this.setCapabilityValue('onoff', true).catch(this.error)
     // this.setCapabilityValue('onoff', false).catch(this.error)
@@ -33,11 +34,6 @@ class MyDevice extends Device {
     this.log('applicationId: ' + store.applicationId);
     this.log('devEui: ' + devEui);
     this.log('devAddr: ' + store.devAddr);
-
-
-
-    const settings = this.getSettings();
-    settings["devEui"] = devEui;
 
     console.log("settings are:");
     console.log(settings.username);

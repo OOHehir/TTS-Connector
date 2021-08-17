@@ -1,9 +1,0 @@
-[
-    {
-      "id": "username",
-      "type": "text",
-      "label": { "en": "Username" },
-      "value": "John Doe",
-      "hint": { "en": "The name of the user." }
-    }
-  ]

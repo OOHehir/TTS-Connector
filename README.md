@@ -1,7 +1,5 @@
 # The Things Network
 
-Based on code from another [app](https://github.com/jordenc/webhook.manager).  
-
 Make Homey part of a global loRaWAN network using The Things Network (TTN) & webhooks.
 
 ### Support

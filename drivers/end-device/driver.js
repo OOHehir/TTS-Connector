@@ -60,6 +60,16 @@ class MyDriver extends Homey.Driver {
           downlinkCount: 0,
           uplinkCount: 0
         },
+        // TODO: Finish the implementation the the following into settings rather than store
+        // Should allow them to be viewed &/ or edited in 'advanced settings' view of Homey App
+        settings:{
+          devEui: newDevice.devEui,
+          downlinkApikey: newDevice.downlinkApikey,
+          downlinkPush: newDevice.downlinkPush,
+          downlinkReplace: newDevice.downlinkReplace,
+          downlinkCount: 0,
+          uplinkCount: 0
+        }
       },
     ];
 
@@ -151,7 +161,7 @@ class MyDriver extends Homey.Driver {
     }
 
     this._webhook = await this.homey.cloud.createWebhook(WEBHOOK_ID, WEBHOOK_SECRET, { $key: key_path_value });
-    // TODO: Bind this to onPair also
+    // TODO: Bind this to onPair also to avoid using the global newDeviceFound
     this._webhook.on('message', this._onWebhookMessage.bind(this));
 
     this.log('Webhook registered');
