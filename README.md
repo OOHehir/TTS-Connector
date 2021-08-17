@@ -1,11 +1,11 @@
 # Development version - only for testing!
 Changes:
-Many of the flowcards are broken
-Implements end devices as individual devices on app
-Only simple on/ off supported at the moment
-When a webhook is received the app records the downlinkApi Key for later use
-
-To add a device go into the pairing mode on the Homey app & trigger an uplink from the TTN console. If the end device hasn't been seen before it will be added as a new end device
+Many of the flowcards are broken  
+Implements end devices as individual devices on app  
+Only simple on/ off supported at the moment  
+When a webhook is received the app records the downlinkApi Key for later use  
+  
+To add a device go into the pairing mode on the Homey app & trigger an uplink from the TTN console. If the end device hasn't been seen before it will be added as a new end device  
 
 # The Things Network
 
