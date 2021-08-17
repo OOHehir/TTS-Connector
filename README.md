@@ -86,6 +86,9 @@ function decodeUplink(input) {
 }
 ```
 
+Below is a simple downlink formatter that works with a simple payload
+
+
 ```javascript
 function encodeDownlink(input) {
   // Input is a string true or false
