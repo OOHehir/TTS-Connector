@@ -86,6 +86,48 @@ function decodeUplink(input) {
 }
 ```
 
+```javascript
+function encodeDownlink(input) {
+  // Input is a string true or false
+  var bytes = [];
+  
+  if (input.data.data.state1 == "false"){
+      bytes[0] = 0;
+    }
+    else if (input.data.data.state1 == "true"){
+      bytes[0] = 1;
+    }
+    else{
+      bytes[0] = 2;
+    }
+  
+  if (input.data.data.state2 && input.data.data.state2 === "false"){
+      bytes[1] = 0;
+    }
+    else if (input.data.data.state2 &&  input.data.data.state2 === "true"){
+      bytes[1] = 1;
+    }
+    else{
+      bytes[1] = 2;
+    }
+  
+  return {
+    bytes: bytes,
+    fPort: input.fPort,
+  };
+}
+
+function decodeDownlink(input) {
+  return {
+    data: {
+      state1: ["false", "true", "other"][input.bytes[0]],
+      state2: ["false", "true", "other"][input.bytes[1]]
+    }
+  };
+}
+```
+
 
 **Version 0.0.1**
 - Initial release
+
