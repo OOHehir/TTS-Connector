@@ -2,6 +2,7 @@
 Changes:  
 Many of the flowcards are broken  
 Implements end devices as individual devices on app  
+Implements Gateway as device in Homey for TX/RX statistics and offline alarms
 Only simple on/ off supported at the moment  
 When a webhook is received the app records the downlinkApi Key for later use  
   
@@ -22,12 +23,16 @@ This app does NOT implement loRa on Homey, rather it uses the internet to connec
 
 The app assumes that your end device is connected correctly to the TTN stack v3.
 
-### Setup (using webhook template) - preferred method
+### Setup a gateway (no webhook required) 
+All public gateways can be added as a Homey device. If your own gateway doesn't show up, make sure that it is set as public in the Things console.
+When adding a gateway to Homey the closest gateways can be automatically selected. You can also choose to do a manual setup. In that case you need to go into the device advanced settings afterwards, and manually change the ID, netID and tenantID to match the gateway you want to have.
+
+### Setup end device (using webhook template) - preferred method
 1. After installing the app on Homey, go to the app 'Configure App' page. It shows the 'Webhook ID' & 'Keypath Value'.
 2. On your TTN console (for [Europe](https://eu1.cloud.thethings.network/console/applications/)) select: 'Relevant Application> Integrations > Webhooks > '+ Add Webhook'> Homey Template. Fill in the details from step 1.
 3. Save!
 
-### Setup (using custom webhook) 
+### Setup end device (using custom webhook) 
 1. After installing the app on Homey, go to the app 'Settings' page. It shows the 'Webhook ID' & 'Keypath Value'.
 2. On your TTN console (for [Europe](https://eu1.cloud.thethings.network/console/applications/)) select: 'Relevant Application> Integrations > Webhooks > '+ Add Webhook'> Custom Template. Fill in the details as follows:  
     webhook ID - a meaningful name for your own use  
@@ -44,7 +49,8 @@ The app assumes that your end device is connected correctly to the TTN stack v3.
 Flows can be triggered by  
 1. Uplink message
 2. Uplink message from specific device
-3. Uplink message from specific application  
+3. Uplink message from specific application 
+4. Gateway going offline and TX/RX statistics (no webhook required)
 
 ### Payload Formatters
 Due to the low data rate of loRa data is made as compact as possible when transmitted 'over the air'. Examples of encoding schemes to compact data are shown [here](https://www.thethingsnetwork.org/docs/devices/bytes/). Using TTN payload [formatters](https://www.thethingsindustries.com/docs/integrations/payload-formatters/) it is possible to convert this 'packed data' into more meaningful states & values before they are sent by webhook to Homey. 

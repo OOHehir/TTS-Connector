@@ -1,0 +1,14 @@
+{
+	"type": "number",
+	"title": {
+		"en": "RX Rate"
+	},
+	"units": {
+		"en": "msg/h"
+	},
+	"getable": true,
+	"setable": false,
+	"insights": true,
+	"uiComponent": "sensor",
+	"icon": "./assets/rx_rate.svg"
+}

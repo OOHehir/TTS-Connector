@@ -134,8 +134,9 @@ class MyDriver extends Homey.Driver {
 
     // Register one webhook for all devices
 
-    if (WEBHOOK_ID === '') {
+    if (!WEBHOOK_ID || WEBHOOK_ID === '') {
       this.log('No webhook ID found, please check env.json');
+      return;
     }
 
     if (this._webhook) {

@@ -1,0 +1,19 @@
+{
+	"type": "boolean",
+	"title": {
+	  "en": "Offline alarm"
+	},
+	"desc": {
+	  "en": "True when the gateway is offline"
+	},
+	"insights": true,
+	"insightsTitleTrue": {
+	  "en": "Offline alarm turned on"
+	},
+	"insightsTitleFalse": {
+	  "en": "Offline alarm turned off"
+	},
+	"getable": true,
+	"setable": false,
+	"uiComponent": "sensor"
+  }

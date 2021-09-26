@@ -1,0 +1,16 @@
+{
+    "id": "is_offline",
+    "title": {
+        "en": "The offline alarm is !{{on|off}}"
+    },
+    "titleFormatted": {
+        "en": "The offline alarm is !{{on|off}}"
+    },
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=gateway"
+        }
+    ]
+}
