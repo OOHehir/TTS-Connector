@@ -1,0 +1,16 @@
+{
+    "id": "alarm_offline_true",
+    "title": {
+        "en": "The offline alarm turned on"
+    },
+    "titleFormatted": {
+        "en": "The offline alarm turned on"
+    },
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=gateway"
+        }
+    ]
+}

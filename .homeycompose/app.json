@@ -1,6 +1,6 @@
 {
   "id": "com.connector.ttn",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#0D83D0",
@@ -13,7 +13,9 @@
   "category": [
     "internet"
   ],
-  "permissions": [],
+  "permissions": [
+    "homey:manager:geolocation"
+  ],
   "api": {
     "postUpdate": {
       "method": "POST",
@@ -29,6 +31,18 @@
   "author": {
     "name": "Owen O'Hehir",
     "email": "oo.hehir@gmail.com"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Owen O'Hehir",
+        "email": "oo.hehir@gmail.com"
+      },
+      {
+        "name": "Robin de Gruijter",
+        "email": "gruijter@hotmail.com"
+      }
+    ]
   },
   "contributing": {
     "donate": {

@@ -1,0 +1,66 @@
+{
+    "id": "status_update",
+    "title": {
+        "en": "New gateway status"
+    },
+    "titleFormatted": {
+        "en": "New gateway status"
+    },
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=gateway"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "id",
+            "type": "string",
+            "title": { "en": "id" },
+            "example": { "en": "mt-ip67-19916043" }
+        },
+        {
+            "name": "eui",
+            "type": "string",
+            "title": { "en": "eui" },
+            "example": { "en": "58A0CBFFFE803427" }
+        },
+        {
+            "name": "clusterID",
+            "type": "string",
+            "title": { "en": "clusterID" },
+            "example": { "en": "ttn-eu1" }
+        },
+        {
+            "name": "antennaPlacement",
+            "type": "string",
+            "title": { "en": "antennaPlacement" },
+            "example": { "en": "INDOOR" }
+        },
+        {
+            "name": "online",
+            "type": "boolean",
+            "title": { "en": "online" },
+            "example": true
+        },
+        {
+            "name": "updatedAt",
+            "type": "string",
+            "title": { "en": "updatedAt" },
+            "example": { "en": "2021-09-25T19:47:57.142924Z" }
+        },
+        {
+          "name": "rxRate",
+          "type": "number",
+          "title": { "en": "rxRate" },
+          "example": 42.711
+        },
+        {
+            "name": "txRate",
+            "type": "number",
+            "title": { "en": "txRate" },
+            "example": 4.834
+        }
+      ]
+}

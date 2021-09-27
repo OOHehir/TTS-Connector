@@ -1,0 +1,80 @@
+[
+	{
+		"type": "group",
+		"label": {
+				"en": "Gateway information"
+		},
+		"children": [
+				{
+						"id": "id",
+						"type": "text",
+						"label": {
+								"en": "ID"
+						},
+						"value": "",
+						"hint": {
+								"en": "DO NOT CHANGE THE ID UNLESS YOU DO A MANUAL SETUP!"
+						}
+				},
+				{
+						"id": "netID",
+						"type": "text",
+						"label": {
+								"en": "netID"
+						},
+						"value": "000013",
+						"hint": {
+								"en": "Should be 000013 for TTN"
+						}
+				},
+				{
+						"id": "tenantID",
+						"type": "text",
+						"label": {
+								"en": "tenantID"
+						},
+						"value": "ttn",
+						"hint": {
+								"en": "ttn or ttnv2"
+						}
+				},
+				{
+						"id": "eui",
+						"type": "label",
+						"label": {
+								"en": "EUI"
+						},
+						"value": ""
+				},
+				{
+						"id": "clusterID",
+						"type": "label",
+						"label": {
+								"en": "clusterID"
+						},
+						"value": ""
+				},
+				{
+						"id": "antennaPlacement",
+						"type": "label",
+						"label": {
+								"en": "antennaPlacement"
+						},
+						"value": ""
+				},
+				{
+					"id": "pollInterval",
+					"type": "number",
+					"label": {
+							"en": "Gateway update interval (minutes)"
+					},
+					"hint": {
+							"en": "Interval for checking the server for a status change."
+					},
+					"min": 1,
+					"max": 60,
+					"value": 1
+				}
+		]
+	}
+]
