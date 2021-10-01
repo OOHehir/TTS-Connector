@@ -38,7 +38,7 @@ class MyDriver extends Driver {
 			data: {
 				id: router.id,	// 'mt-ip67-19916043'
 			},
-			capabilities: ['rx_rate', 'tx_rate', 'alarm_offline', 'last_update'],
+			capabilities: ['measure_rx', 'measure_tx', 'alarm_offline', 'last_update'],
 			settings: {
 				id: router.id, // 'mt-ip67-19916043',
 				netID: router.netID,	// '000013'
@@ -53,7 +53,7 @@ class MyDriver extends Driver {
 			data: {
 				id: Math.random().toString(36).substring(2, 15),	// 'c3u1m1cbmih'
 			},
-			capabilities: ['rx_rate', 'tx_rate', 'alarm_offline', 'last_update'],
+			capabilities: ['measure_rx', 'measure_tx', 'alarm_offline', 'last_update'],
 			settings: {
 				id: 'FILL IN THE ID',
 				netID: '000013',

@@ -4,5 +4,8 @@
   },
   "0.1.0": {
     "en": "Implements Gateway as device in Homey for TX/RX statistics and offline alarms"
+  },
+  "0.2.0": {
+    "en": "Gateway TX/RX statistics enhanced capabilities (device repair required)"
   }
 }

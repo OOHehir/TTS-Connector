@@ -119,8 +119,8 @@ class MyDevice extends Device {
 		// console.log(stats);
 		if (!stats) return;
 		this.setCapability('alarm_offline', !stats.online);
-		this.setCapability('rx_rate', Math.round(stats.rxRate * 10) / 10);
-		this.setCapability('tx_rate', Math.round(stats.txRate * 10) / 10);
+		this.setCapability('measure_rx', Math.round(stats.rxRate * 10) / 10);
+		this.setCapability('measure_tx', Math.round(stats.txRate * 10) / 10);
 		const ds = new Date(stats.updatedAt);
 		const date = ds.toString().substring(4, 11);
 		const time = ds.toLocaleTimeString('nl-NL', { hour12: false, timeZone: this.homey.clock.getTimezone() }).substring(0, 5);

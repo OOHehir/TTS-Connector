@@ -4,8 +4,8 @@
   },
   "class": "sensor",
   "capabilities": [
-    "rx_rate",
-    "tx_rate",
+    "measure_rx",
+    "measure_tx",
     "alarm_offline",
     "last_update"
   ],
