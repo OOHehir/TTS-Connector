@@ -1,7 +1,7 @@
 {
 	"type": "number",
 	"title": {
-		"en": "RX Rate"
+		"en": "TX Rate"
 	},
 	"units": {
 		"en": "msg/h"
@@ -10,5 +10,5 @@
 	"setable": false,
 	"insights": true,
 	"uiComponent": "sensor",
-	"icon": "./assets/rx_rate.svg"
+	"icon": "./assets/measure_tx.svg"
 }

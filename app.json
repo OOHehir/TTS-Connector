@@ -325,8 +325,8 @@
       },
       "class": "sensor",
       "capabilities": [
-        "rx_rate",
-        "tx_rate",
+        "measure_rx",
+        "measure_tx",
         "alarm_offline",
         "last_update"
       ],
@@ -464,7 +464,7 @@
       "uiComponent": "sensor",
       "icon": "./assets/last_update.svg"
     },
-    "rx_rate": {
+    "measure_rx": {
       "type": "number",
       "title": {
         "en": "RX Rate"
@@ -478,7 +478,7 @@
       "uiComponent": "sensor",
       "icon": "./assets/rx_rate.svg"
     },
-    "tx_rate": {
+    "measure_tx": {
       "type": "number",
       "title": {
         "en": "TX Rate"
